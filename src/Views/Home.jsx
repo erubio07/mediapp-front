@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [username, setUsername] = useState("");
@@ -18,8 +19,9 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>MediApp</h1>
+    <div className={styles.container}>
+      <div className={styles.home}>
+      <h1 className={styles.title}>MediApp</h1>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username: </Form.Label>
@@ -28,6 +30,7 @@ const Home = () => {
             placeholder="Enter Username"
             value={username}
             onChange={handleUsername}
+            className={styles.input}
           />
           {/* <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -41,15 +44,17 @@ const Home = () => {
             placeholder="Password"
             value={password}
             onChange={handlePassword}
+            className={styles.input}
           />
         </Form.Group>
         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group> */}
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className={styles.button}>
           Iniciar Sesión
         </Button>
       </Form>
+      </div>
     </div>
   );
 };
