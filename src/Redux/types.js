@@ -1,0 +1,1 @@
+export const CLEAR_USER = "CLEAR_USER";
