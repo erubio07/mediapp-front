@@ -1,0 +1,51 @@
+.sidebar {
+  width: 250px;
+  height: 80vh;
+  padding: 20px;
+  background-color: #ecf6f7;
+  position: fixed;
+  top: 90px;
+  left: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover {
+  background-color: #d4ebed;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
+}
+
+/* Estilo para la imagen de perfil */
+.profileContainer {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border: solid;
+  border-radius: 50%; /* Imagen circular */
+  object-fit: cover;
+}
+
+.link {
+  text-decoration: none;
+  font-size: 18px; /* Aumenta el tamaño del texto */
+  display: flex;
+  align-items: center;
+  margin: 10px 0; /* Espacio entre los enlaces */
+}
+
+.icon {
+  font-size: 24px; /* Aumenta el tamaño del ícono */
+  margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+.linkContainer {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+}

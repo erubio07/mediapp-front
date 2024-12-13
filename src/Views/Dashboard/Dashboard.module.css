@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  margin-top: 60px; /* Ajusta este valor según la altura de tu navbar */
+  padding-left: 250px; /* Asegura que el contenido no se superponga con la sidebar */
+}
+
+.content {
+  flex-grow: 1; /* Hace que el contenido ocupe el espacio restante */
+  padding: 20px;
+  background-color: #ffffff;
+  overflow: visible;
+}
