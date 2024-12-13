@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import styles from "./CreateDocuments.module.css"
 
 const CreateDocuments = () => {
   const [nombre, setNombre] = useState("");
@@ -53,9 +54,9 @@ const CreateDocuments = () => {
   };
 
   return (
-    <div>
-      <h1>Crear Documentos</h1>
-      <Form onSubmit={handleCreate}>
+    <div className={styles.createDocuments}>
+      <h1 className={styles.title}>Crear Documentos</h1>
+      <Form onSubmit={handleCreate} className={styles.form}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Nombre: </Form.Label>
           <Form.Control
@@ -63,6 +64,7 @@ const CreateDocuments = () => {
             placeholder="Ingrese un Nombre"
             value={nombre}
             onChange={handleName}
+            className={styles.formControl}
           />
           {/* <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -72,7 +74,7 @@ const CreateDocuments = () => {
         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group> */}
-        <Button variant="primary" type="submit">
+        <Button className={styles.btn} variant="primary" type="submit">
           Crear Documento
         </Button>
       </Form>

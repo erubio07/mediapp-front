@@ -22,7 +22,7 @@ const SideBar = ({ handleOption }) => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.profileContainer}>
-        <img alt="Imagen de perfil" className={styles.profileImage} />
+        <img alt="user" className={styles.profileImage} />
         {/* <img
           src={<FcReddit/>}
           alt="Imagen de perfil"
