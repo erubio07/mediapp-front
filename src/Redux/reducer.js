@@ -7,7 +7,7 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USER_BY_ID:
-      console.log("Usuario en reducer: ", action.payload);
+      // console.log("Usuario en reducer: ", action.payload);
       return {
         ...state,
         user: action.payload,

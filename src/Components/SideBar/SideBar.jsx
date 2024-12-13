@@ -3,15 +3,22 @@ import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../AuthProvider/AuthProvider";
 import { getUserById } from "../../Redux/actions";
+import {
+  TfiPowerOff,
+  TfiUser,
+  TfiPencilAlt,
+  TfiWrite,
+  TfiIdBadge,
+} from "react-icons/tfi";
 import styles from "./SideBar.module.css";
 
 const SideBar = ({ handleOption }) => {
   const auth = useAuth();
   const dispatch = useDispatch();
   const id = localStorage.getItem("userId");
-  console.log(id);
+  // console.log(id);
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     if (id) {
@@ -22,7 +29,7 @@ const SideBar = ({ handleOption }) => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.profileContainer}>
-        <img alt="user" className={styles.profileImage} />
+        <TfiUser className={styles.profileImage} />
         {/* <img
           src={<FcReddit/>}
           alt="Imagen de perfil"
@@ -36,21 +43,21 @@ const SideBar = ({ handleOption }) => {
             onClick={() => handleOption("contracts")}
             className={styles.link}
           >
-            Crear Contratos
+            <TfiWrite /> Crear Contratos
           </Link>
         </>
       )}
       {user.RoleId === 1 && (
         <>
-          <h2>Opciones Admin</h2>
+          <h6>Opciones Admin</h6>
         </>
       )}
 
       <Link onClick={() => handleOption("edituser")} className={styles.link}>
-        Editar Usuario
+        <TfiIdBadge /> Editar Usuario
       </Link>
       <Link onClick={() => auth.logOut()} className={styles.link}>
-        Logout
+        <TfiPowerOff /> Logout
       </Link>
     </div>
   );

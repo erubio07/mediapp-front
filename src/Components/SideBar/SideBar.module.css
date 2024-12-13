@@ -89,17 +89,30 @@
 
 .link {
   text-decoration: none;
-  font-size: 15px;
-  color: #555555;
-  display: block;
-  padding: 12px 20px;
-  border-left: 3px solid transparent;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  font-size: 16px; /* Tamaño de fuente para el texto */
+  color: #333333;
+  display: flex; /* Asegura la alineación del ícono y el texto */
+  align-items: center; /* Alinea verticalmente el ícono y el texto */
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  gap: 10px; /* Espacio entre el ícono y el texto */
 }
 
 .link:hover {
-  background-color: #f7f7f7;
-  border-color: #007acc;
+  background-color: #dcdcdc;
+  color: #000000;
+}
+
+.linkContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.link svg {
+  font-size: 20px; /* Ajusta el tamaño de los íconos */
+  flex-shrink: 0; /* Evita que el ícono cambie de tamaño en caso de textos largos */
 }
 
 .linkContainer {

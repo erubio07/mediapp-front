@@ -15,7 +15,7 @@ const CreateDocuments = () => {
   const generateDocument = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/fill",
+        "https://molecular-ferdinande-ezequielrubio-c5ad57aa.koyeb.app/fill",
         { nombre },
         {
           responseType: "blob", // Especificar que la respuesta es un blob
