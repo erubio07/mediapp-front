@@ -1,0 +1,40 @@
+.container {
+    position: relative;
+    /* min-height: 50vh;  */
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center;
+    background-color: #000; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    padding: 10px; /* Ajusta el padding para mayor espacio alrededor de los elementos */
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box; /* Importante para evitar que el padding afecte el ancho */
+  }
+  
+  .body {
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  .logo {
+    width: 100px;
+    height: auto;
+  }
+  
+  .contact {
+    text-align: center;
+  }
+  
+  .social-icons img {
+    width: 24px;
+    height: 24px;
+    margin: 0 5px;
+  }
+  
+  .creator {
+    text-align: right;
+  }

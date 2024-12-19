@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useAuth } from "../../Components/AuthProvider/AuthProvider";
 import { getUserById } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
@@ -118,6 +118,7 @@ const Home = () => {
           <Button variant="primary" type="submit" className={styles.button}>
             Iniciar Sesión
           </Button>
+          <Link to="/subs" className={styles.link}>Suscribirse</Link>
         </Form>
       </div>
     </div>
