@@ -56,15 +56,15 @@
 /* Alternativa 2 */
 .sidebar {
   width: 250px;
-  height: 100vh;
+  height: calc(100vh - 56px); /* Ajusta la altura excluyendo la altura de la navbar */
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   position: fixed;
-  top: 0;
+  top: 60px; /* Ajusta este valor al tamaño de la navbar */
   left: 0;
-  border-right: 1px solid #aaaaaa;
+  border-right: 2px solid #d1d1d1;
   box-shadow: none;
-  transition: box-shadow 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar:hover {

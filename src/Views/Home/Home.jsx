@@ -92,7 +92,7 @@ const Home = () => {
             <Form.Label>Username: </Form.Label>
             <Form.Control
               type="username"
-              placeholder="Enter Username"
+              placeholder="Username"
               value={username}
               onChange={handleUsername}
               className={styles.input}
