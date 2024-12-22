@@ -87,7 +87,7 @@ const Subscription = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Plan Standard" />
+            <Form.Check type="checkbox" label="Plan Standard --> U$S 5/Month" />
           </Form.Group>
           <Button variant="primary" type="submit" className={styles.button}>
             Siguiente
