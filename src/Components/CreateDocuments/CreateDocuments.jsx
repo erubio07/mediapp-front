@@ -16,11 +16,47 @@ const CreateDocuments = () => {
     requirente: {
       name: "",
       dni: "",
+      adress: "",
+      email: "",
+      phoneNumber: "",
+      letrado: {
+        name: "",
+        adress: "",
+        email: "",
+        phoneNumber: "",
+      },
+      mediador: {
+        name: "",
+        mat: "",
+      },
     },
     requerido: {
       name: "",
       dni: "",
+      adress: "",
+      email: "",
+      phoneNumber: "",
+      letrado: {
+        name: "",
+        adress: "",
+        email: "",
+        phoneNumber: "",
+      },
+      mediador: {
+        name: "",
+        mat: "",
+      },
     },
+    tercero: {
+      name: "",
+      dni: "",
+      adress: "",
+      cp: "",
+      phoneNumber: "",
+      cellPhone: "",
+    },
+    adressMediacion: "",
+    abogadoPatrocinante: "",
   });
   console.log(input);
 
@@ -44,11 +80,15 @@ const CreateDocuments = () => {
     });
   };
 
-  const generateDocument = async () => {
+  const generateDocument10 = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/fill", input, {
-        responseType: "blob", // Especificar que la respuesta es un blob
-      });
+      const response = await axios.post(
+        "http://localhost:3000/fill/template_10",
+        input,
+        {
+          responseType: "blob", // Especificar que la respuesta es un blob
+        }
+      );
 
       // Crear un blob a partir del archivo recibido
       const blob = new Blob([response.data], {
@@ -59,7 +99,7 @@ const CreateDocuments = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `documento_${"generico"}.docx`; // Usar el nombre ingresado o un valor genérico
+      link.download = `1-0-CONV.CONFIDENCIALIDAD JUD VIRTUAL1b.docx`; // Usar el nombre ingresado o un valor genérico
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -71,7 +111,7 @@ const CreateDocuments = () => {
     }
   };
 
-  const handleCreate = async (e) => {
+  const handleCreate10 = async (e) => {
     e.preventDefault();
     try {
       if (
@@ -84,7 +124,57 @@ const CreateDocuments = () => {
         !input.requerido.dni
       )
         alert("Se debe ingresar un nombre para proceder");
-      await generateDocument();
+      await generateDocument10();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const generateDocument11 = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/fill/template_11",
+        input,
+        {
+          responseType: "blob", // Especificar que la respuesta es un blob
+        }
+      );
+
+      // Crear un blob a partir del archivo recibido
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      });
+
+      // Crear un enlace de descarga temporal
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `1-0-CONV.CONFIDENCIALIDAD JUD VIRTUAL1b.docx`; // Usar el nombre ingresado o un valor genérico
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      // Liberar el objeto URL
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error descargando el documento:", error);
+    }
+  };
+
+  const handleCreate11 = async (e) => {
+    e.preventDefault();
+    try {
+      if (
+        !input.expediente ||
+        !input.number ||
+        !input.date ||
+        !input.requirente.name ||
+        !input.requirente.dni ||
+        !input.requerido.name ||
+        !input.requerido.dni
+      )
+        alert("Se debe ingresar un nombre para proceder");
+      await generateDocument11();
     } catch (error) {
       console.log(error.message);
     }
@@ -93,7 +183,7 @@ const CreateDocuments = () => {
   return (
     <div className={styles.createDocuments}>
       <h1 className={styles.title}>Crear Documentos</h1>
-      <Form onSubmit={handleCreate} className={styles.form}>
+      <Form onSubmit={handleCreate10} className={styles.form}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Carátula de Expediente: </Form.Label>
           <Form.Control
@@ -113,7 +203,7 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
-          <Form.Label>Fecha: </Form.Label>
+          <Form.Label>Día de Audiencia: </Form.Label>
           <Form.Control
             type="text"
             name="date"
@@ -122,16 +212,35 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
-          <Form.Label>Hora: </Form.Label>
+          <Form.Label>Hora de Inicio: </Form.Label>
           <Form.Control
             type="text"
-            name="hour"
-            placeholder="Ingrese la Hora"
-            value={input.hour}
+            name="start"
+            placeholder="Ingrese la Hora de Inicio"
+            value={input.start}
             onChange={handleInput}
             className={styles.formControl}
           />
-          <Form.Label>Nombre del Requirente: </Form.Label>
+          <Form.Label>Hora de Finalización: </Form.Label>
+          <Form.Control
+            type="text"
+            name="end"
+            placeholder="Ingrese la Hora de Finalización"
+            value={input.end}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Fecha y Hora de Próxima Reunión: </Form.Label>
+          <Form.Control
+            type="text"
+            name="nextDate"
+            placeholder="Ingrese fecha y hora proxima reunion"
+            value={input.nextDate}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <h6>Datos Requirente</h6>
+          <Form.Label>Nombre: </Form.Label>
           <Form.Control
             type="text"
             name="requirente.name"
@@ -140,7 +249,7 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
-          <Form.Label>DNI Requirente: </Form.Label>
+          <Form.Label>DNI: </Form.Label>
           <Form.Control
             type="text"
             name="requirente.dni"
@@ -149,6 +258,90 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
+          <Form.Label>Domicilio: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.adress"
+            placeholder="Ingrese el Domicilio del Requirente"
+            value={input.requirente.adress}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Email: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.email"
+            placeholder="Ingrese el Email del Requirente"
+            value={input.requirente.email}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>N° Celular: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.phoneNumber"
+            placeholder="Ingrese el N° de Celular del Requirente"
+            value={input.requirente.phoneNumber}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <h6>Letrado Requirente</h6>
+          <Form.Label>Nombre: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.letrado.name"
+            placeholder="Ingrese el Nombre"
+            value={input.requirente.letrado.dni}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Domicilio: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.letrado.adress"
+            placeholder="Ingrese el Domicilio"
+            value={input.requirente.letrado.adress}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Email: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.letrado.email"
+            placeholder="Ingrese el Email"
+            value={input.requirente.letrado.email}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>N° Celular: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.letrado.phoneNumber"
+            placeholder="Ingrese el N° de Celular"
+            value={input.requirente.letrado.phoneNumber}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <h6>Mediador Requirente</h6>
+          <Form.Label>Nombre: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.mediador.name"
+            placeholder="Ingrese el Nombre"
+            value={input.requirente.mediador.name}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Matricula: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requirente.mediador.mat"
+            placeholder="Ingrese la Matricula"
+            value={input.requirente.mediador.mat}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <h6>Datos de Requerido</h6>
           <Form.Label>Nombre del Requerido: </Form.Label>
           <Form.Control
             type="text"
@@ -167,13 +360,107 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
+          <Form.Label>Domicilio: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.adress"
+            placeholder="Ingrese el Domicilio del Requerido"
+            value={input.requerido.adress}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Email: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.email"
+            placeholder="Ingrese el Email del Requerido"
+            value={input.requerido.email}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>N° Celular: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.phoneNumber"
+            placeholder="Ingrese el Número de Celular del Requirente"
+            value={input.requerido.phoneNumber}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <h6>Letrado Requerido</h6>
+          <Form.Label>Nombre: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.letrado.name"
+            placeholder="Ingrese el Nombre"
+            value={input.requerido.letrado.dni}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Domicilio: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.letrado.adress"
+            placeholder="Ingrese el Domicilio"
+            value={input.requerido.letrado.adress}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Email: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.letrado.email"
+            placeholder="Ingrese el Email"
+            value={input.requerido.letrado.email}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>N° Celular: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.letrado.phoneNumber"
+            placeholder="Ingrese el N° de Celular"
+            value={input.requerido.letrado.phoneNumber}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <h6>Mediador Requerido</h6>
+          <Form.Label>Nombre: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.mediador.name"
+            placeholder="Ingrese el Nombre"
+            value={input.requerido.mediador.name}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
+          <Form.Label>Matricula: </Form.Label>
+          <Form.Control
+            type="text"
+            name="requerido.mediador.mat"
+            placeholder="Ingrese la Matricula"
+            value={input.requerido.mediador.mat}
+            onChange={handleInput}
+            className={styles.formControl}
+          />
         </Form.Group>
 
         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group> */}
-        <Button className={styles.btn} variant="primary" type="submit">
-          Crear Documento
+        <Button
+          className={styles.btn}
+          variant="primary"
+          onClick={() => handleCreate10()}
+        >
+          CREAR CONV.CONF. JUD. VIRtUAL
+        </Button>
+        <Button
+          className={styles.btn}
+          variant="primary"
+          onClick={() => handleCreate11()}
+        >
+          ACTA AUDIENCIA VIRTUAL CJM
         </Button>
       </Form>
     </div>
