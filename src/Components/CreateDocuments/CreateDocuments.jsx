@@ -82,13 +82,9 @@ const CreateDocuments = () => {
 
   const generateDocument10 = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/fill/template_10",
-        input,
-        {
-          responseType: "blob", // Especificar que la respuesta es un blob
-        }
-      );
+      const response = await axios.post("http://localhost:3000/fill", input, {
+        responseType: "blob", // Especificar que la respuesta es un blob
+      });
 
       // Crear un blob a partir del archivo recibido
       const blob = new Blob([response.data], {
@@ -112,7 +108,7 @@ const CreateDocuments = () => {
   };
 
   const handleCreate10 = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       if (
         !input.expediente ||
@@ -162,7 +158,7 @@ const CreateDocuments = () => {
   };
 
   const handleCreate11 = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       if (
         !input.expediente ||
@@ -239,7 +235,7 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
-          <h6>Datos Requirente</h6>
+          <h6 className={styles.sectionTitle}>Datos Requirente</h6>
           <Form.Label>Nombre: </Form.Label>
           <Form.Control
             type="text"
@@ -341,7 +337,7 @@ const CreateDocuments = () => {
             onChange={handleInput}
             className={styles.formControl}
           />
-          <h6>Datos de Requerido</h6>
+          <h6 className={styles.sectionTitle}>Datos de Requerido</h6>
           <Form.Label>Nombre del Requerido: </Form.Label>
           <Form.Control
             type="text"

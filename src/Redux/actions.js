@@ -4,9 +4,7 @@ import axios from "axios";
 export const getUserById = (id) => {
   // console.log("UserId en Actions: ", id);
   return async function (dispatch) {
-    let user = await axios.get(
-      `https://molecular-ferdinande-ezequielrubio-c5ad57aa.koyeb.app/user/${id}`
-    );
+    let user = await axios.get(`http://localhost:3000/user/${id}`);
     // console.log(user);
     return dispatch({
       type: GET_USER_BY_ID,

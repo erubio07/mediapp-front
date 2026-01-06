@@ -32,13 +32,10 @@ const Home = () => {
         return;
       }
       if (username && password) {
-        const data = await axios.post(
-          "https://molecular-ferdinande-ezequielrubio-c5ad57aa.koyeb.app/login",
-          {
-            username,
-            password,
-          }
-        );
+        const data = await axios.post("http://localhost:3000/login", {
+          username,
+          password,
+        });
         const userData = data.data;
         // console.log(userData);
         if (data.status === 200) {
@@ -73,7 +70,6 @@ const Home = () => {
       }
     }
   };
-
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -118,7 +114,9 @@ const Home = () => {
           <Button variant="primary" type="submit" className={styles.button}>
             Iniciar Sesión
           </Button>
-          <Link to="/subs" className={styles.link}>Suscribirse</Link>
+          <Link to="/subs" className={styles.link}>
+            Suscribirse
+          </Link>
         </Form>
       </div>
     </div>

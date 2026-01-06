@@ -11,13 +11,13 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 function NavBar() {
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
-  console.log(userId);
+  // console.log(userId);
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   const auth = useAuth();
 
   useEffect(() => {
-    if(userId){
+    if (userId) {
       dispatch(getUserById(userId));
     }
   }, [dispatch, userId]);
@@ -34,7 +34,10 @@ function NavBar() {
           </Nav>
           {user && (
             <Navbar.Text>
-              Signed in as: <Link onClick={() => auth.logOut()}>{user.name} {user.surname}</Link>
+              Signed in as:{" "}
+              <Link onClick={() => auth.logOut()}>
+                {user.name} {user.surname}
+              </Link>
             </Navbar.Text>
           )}
         </Navbar.Collapse>
