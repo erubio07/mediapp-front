@@ -1,0 +1,523 @@
+.navbarBackground {
+  position: relative;
+  width: 100%;
+  padding: 18px 24px 4px;
+  background:
+    radial-gradient(
+      circle at 8% 5%,
+      rgba(74, 145, 184, 0.14),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 95% 90%,
+      rgba(23, 50, 77, 0.1),
+      transparent 32rem
+    ),
+    #f4f6f8;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.navbarBackground::before {
+  position: absolute;
+  top: -190px;
+  left: -150px;
+  width: 480px;
+  height: 480px;
+  border: 1px solid rgba(72, 122, 151, 0.1);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.navbarBackground::after {
+  position: absolute;
+  right: -190px;
+  bottom: -280px;
+  width: 620px;
+  height: 620px;
+  border: 1px solid rgba(72, 122, 151, 0.08);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.header {
+  position: relative;
+  z-index: 100;
+  width: 100%;
+}
+
+.navbar {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #dce3e9;
+  border-radius: 16px;
+  box-shadow:
+    0 14px 34px rgba(28, 45, 61, 0.08),
+    0 3px 8px rgba(28, 45, 61, 0.04);
+  backdrop-filter: blur(14px);
+}
+
+.navbarInner {
+  position: relative;
+  display: flex;
+  min-height: 78px;
+  padding: 0 20px;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 13px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brandIcon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(145deg, #17324d, #356f91);
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(23, 50, 77, 0.18);
+}
+
+.brandIcon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brandText strong {
+  color: #17324d;
+  font-size: 1.2rem;
+  font-weight: 780;
+  letter-spacing: -0.025em;
+}
+
+.brandText small {
+  color: #768794;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.navigationLinks {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 7px;
+}
+
+.navLink {
+  position: relative;
+  display: flex;
+  min-height: 46px;
+  padding: 0 15px;
+  align-items: center;
+  gap: 9px;
+  color: #526879;
+  border-radius: 10px;
+  font-size: 0.87rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+
+.navLink::after {
+  position: absolute;
+  right: 15px;
+  bottom: -16px;
+  left: 15px;
+  height: 3px;
+  background: #356f91;
+  border-radius: 999px 999px 0 0;
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.navLink:hover {
+  color: #234d6d;
+  background: #f1f6f9;
+  transform: translateY(-1px);
+}
+
+.navLinkActive {
+  color: #245f84;
+  background: #eaf3f8;
+}
+
+.navLinkActive::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.navIcon {
+  display: flex;
+  width: 19px;
+  height: 19px;
+}
+
+.navIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.userArea {
+  position: relative;
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding-left: 23px;
+  border-left: 1px solid #e0e6ea;
+}
+
+.profileButton {
+  display: flex;
+  min-width: 210px;
+  min-height: 54px;
+  padding: 6px 10px;
+  align-items: center;
+  gap: 11px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 11px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 150ms ease;
+}
+
+.profileButton:hover {
+  background: #f4f8fa;
+}
+
+.profileButton:focus-visible,
+.logoutButton:focus-visible,
+.signInButton:focus-visible,
+.profileMenuLink:focus-visible {
+  outline: 3px solid rgba(64, 126, 162, 0.26);
+  outline-offset: 2px;
+}
+
+.avatar {
+  display: grid;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: #245c7d;
+  background: #e2eef6;
+  border: 1px solid #d1e1eb;
+  border-radius: 50%;
+  font-size: 0.83rem;
+  font-weight: 800;
+}
+
+.avatar svg {
+  width: 21px;
+  height: 21px;
+}
+
+.userInformation {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userInformation small {
+  color: #7a8995;
+  font-size: 0.68rem;
+  font-weight: 550;
+}
+
+.userInformation strong {
+  overflow: hidden;
+  color: #19374f;
+  font-size: 0.83rem;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signInLabel {
+  font-size: 0.88rem !important;
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  color: #617584;
+  transition: transform 180ms ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.profileMenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 260px;
+  padding: 10px;
+  visibility: hidden;
+  background: #ffffff;
+  border: 1px solid #dce3e9;
+  border-radius: 12px;
+  box-shadow:
+    0 18px 38px rgba(28, 45, 61, 0.14),
+    0 4px 10px rgba(28, 45, 61, 0.05);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    visibility 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.profileMenuOpen {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.profileMenuHeader {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  gap: 11px;
+  border-bottom: 1px solid #e5eaee;
+}
+
+.profileMenuAvatar {
+  display: grid;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  color: #245c7d;
+  background: #e2eef6;
+  border-radius: 50%;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.profileMenuHeader div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profileMenuHeader strong {
+  overflow: hidden;
+  color: #1c354b;
+  font-size: 0.79rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileMenuHeader small {
+  color: #7a8995;
+  font-size: 0.68rem;
+}
+
+.profileMenuLink,
+.logoutButton,
+.signInButton {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  padding: 0 11px;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.79rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.profileMenuLink {
+  margin-top: 8px;
+  color: #355a73;
+}
+
+.profileMenuLink:hover {
+  color: #173e5d;
+  background: #f1f6f9;
+}
+
+.logoutButton {
+  margin-top: 4px;
+  color: #9a3c3c;
+}
+
+.logoutButton:hover {
+  background: #fff1f1;
+}
+
+.signInButton {
+  color: #285d7d;
+}
+
+.signInButton:hover {
+  background: #edf5f9;
+}
+
+.profileMenuLink span,
+.logoutButton span,
+.signInButton span {
+  display: flex;
+  width: 18px;
+  height: 18px;
+}
+
+.profileMenuLink svg,
+.logoutButton svg,
+.signInButton svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .navbarBackground {
+    padding: 14px 16px 4px;
+  }
+
+  .navbarInner {
+    min-height: 70px;
+    padding: 0 15px;
+  }
+
+  .brandText small {
+    display: none;
+  }
+
+  .navigationLinks {
+    gap: 4px;
+  }
+
+  .navLink {
+    padding: 0 11px;
+  }
+
+  .userArea {
+    padding-left: 14px;
+  }
+
+  .profileButton {
+    min-width: 170px;
+  }
+
+  .userInformation strong {
+    max-width: 115px;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbarInner {
+    min-height: 66px;
+    gap: 10px;
+  }
+
+  .brandIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brandText strong {
+    font-size: 1.08rem;
+  }
+
+  .navigationLinks {
+    display: none;
+  }
+
+  .userArea {
+    margin-left: auto;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .profileButton {
+    min-width: auto;
+    padding: 5px 7px;
+  }
+
+  .userInformation {
+    display: none;
+  }
+
+  .profileMenu {
+    width: 230px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbarBackground {
+    padding: 10px 10px 4px;
+  }
+
+  .navbar {
+    border-radius: 13px;
+  }
+
+  .navbarInner {
+    min-height: 62px;
+    padding: 0 11px;
+  }
+
+  .brandIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brandText strong {
+    font-size: 1rem;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .profileMenu {
+    right: -2px;
+    width: min(230px, calc(100vw - 30px));
+  }
+}

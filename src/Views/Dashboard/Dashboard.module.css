@@ -1,13 +1,372 @@
 .container {
-  display: flex;
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
-  margin-top: 60px; /* Ajusta este valor según la altura de tu navbar */
-  padding-left: 250px; /* Asegura que el contenido no se superponga con la sidebar */
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 116px);
+  margin-top: 0;
+  overflow-x: hidden;
+  color: #1c2d3d;
+  background:
+    radial-gradient(
+      circle at 11% 2%,
+      rgba(74, 145, 184, 0.1),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 92% 88%,
+      rgba(23, 50, 77, 0.07),
+      transparent 35rem
+    ),
+    #f4f6f8;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.container::before {
+  position: fixed;
+  top: 98px;
+  right: -170px;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(72, 122, 151, 0.08);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.container::after {
+  position: fixed;
+  right: 70px;
+  bottom: 30px;
+  width: 290px;
+  height: 290px;
+  border: 1px solid rgba(72, 122, 151, 0.06);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.backgroundCircleOne,
+.backgroundCircleTwo {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.backgroundCircleOne {
+  top: 140px;
+  left: 190px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(76, 132, 166, 0.05);
+}
+
+.backgroundCircleTwo {
+  right: -260px;
+  bottom: -260px;
+  width: 650px;
+  height: 650px;
+  border: 1px solid rgba(76, 132, 166, 0.07);
+}
+
+.backgroundDots {
+  position: fixed;
+  right: 45px;
+  bottom: 55px;
+  width: 150px;
+  height: 115px;
+  opacity: 0.24;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    #76acd0 1.4px,
+    transparent 1.5px
+  );
+  background-size: 15px 15px;
 }
 
 .content {
-  flex-grow: 1; /* Hace que el contenido ocupe el espacio restante */
-  padding: 20px;
-  background-color: #ffffff;
-  overflow: visible;
+  position: relative;
+  z-index: 2;
+  width: auto;
+  min-height: calc(100vh - 116px);
+  margin-left: 286px;
+  padding: 24px 24px 48px 0;
+}
+
+.contentInner {
+  width: min(1320px, 100%);
+  min-height: calc(100vh - 188px);
+  margin: 0 auto;
+}
+
+.welcomeSection {
+  position: relative;
+  display: flex;
+  min-height: 230px;
+  padding: 34px 8px 30px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  overflow: hidden;
+}
+
+.welcomeContent {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 9px;
+  color: #417696;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.welcomeTitle {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  color: #17324d;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 760;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+}
+
+.welcomeEmoji {
+  display: inline-block;
+  font-size: 0.85em;
+  transform-origin: 70% 70%;
+  animation: wave 2.3s ease-in-out infinite;
+}
+
+.welcomeDescription {
+  max-width: 650px;
+  margin: 12px 0 0;
+  color: #637787;
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.welcomeDecoration {
+  position: relative;
+  display: grid;
+  width: 165px;
+  height: 90px;
+  margin-top: 15px;
+  grid-template-columns: repeat(4, 6px);
+  grid-auto-rows: 6px;
+  gap: 13px;
+  align-content: center;
+  justify-content: center;
+  opacity: 0.3;
+}
+
+.welcomeDecoration span {
+  width: 5px;
+  height: 5px;
+  background: #72a9cc;
+  border-radius: 50%;
+}
+
+.componentContainer {
+  width: 100%;
+  min-height: calc(100vh - 185px);
+  animation: showContent 230ms ease;
+}
+
+/*
+  CreateDocuments ya tiene fondo, tarjeta y espaciado propio.
+  Con esta regla eliminamos el padding exterior excesivo cuando
+  se renderiza dentro del Dashboard.
+*/
+.componentContainer > :global(.page) {
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+}
+
+.placeholderCard {
+  width: min(850px, 100%);
+  margin-top: 22px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #dce3e9;
+  border-radius: 17px;
+  box-shadow:
+    0 15px 34px rgba(28, 45, 61, 0.08),
+    0 3px 8px rgba(28, 45, 61, 0.04);
+}
+
+.placeholderEyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #417696;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.placeholderCard h2 {
+  margin: 0;
+  color: #17324d;
+  font-size: 1.55rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.placeholderCard p {
+  max-width: 640px;
+  margin: 10px 0 0;
+  color: #6b7d8c;
+  font-size: 0.91rem;
+  line-height: 1.65;
+}
+
+@keyframes showContent {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave {
+  0%,
+  55%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  60% {
+    transform: rotate(15deg);
+  }
+
+  67% {
+    transform: rotate(-7deg);
+  }
+
+  74% {
+    transform: rotate(13deg);
+  }
+
+  81% {
+    transform: rotate(-5deg);
+  }
+
+  88% {
+    transform: rotate(8deg);
+  }
+}
+
+@media (max-width: 1180px) {
+  .content {
+    margin-left: 256px;
+    padding-right: 20px;
+  }
+
+  .contentInner {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1050px) {
+  .content {
+    margin-left: 250px;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .container {
+    min-height: calc(100vh - 96px);
+  }
+
+  .content {
+    min-height: calc(100vh - 96px);
+    margin-left: 102px;
+    padding: 20px 16px 40px 0;
+  }
+
+  .contentInner {
+    min-height: calc(100vh - 150px);
+  }
+
+  .welcomeSection {
+    min-height: 200px;
+    padding-top: 25px;
+  }
+
+  .welcomeDecoration {
+    display: none;
+  }
+
+  .componentContainer {
+    min-height: calc(100vh - 155px);
+  }
+}
+
+@media (max-width: 560px) {
+  .container {
+    min-height: calc(100vh - 74px);
+    padding-bottom: 84px;
+  }
+
+  .content {
+    width: 100%;
+    min-height: auto;
+    margin-left: 0;
+    padding: 17px 13px 30px;
+  }
+
+  .contentInner {
+    min-height: auto;
+  }
+
+  .welcomeSection {
+    min-height: 175px;
+    padding: 22px 3px;
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+  }
+
+  .welcomeTitle {
+    display: block;
+    font-size: 1.55rem;
+  }
+
+  .welcomeEmoji {
+    margin-left: 5px;
+  }
+
+  .welcomeDescription {
+    font-size: 0.86rem;
+  }
+
+  .placeholderCard {
+    margin-top: 5px;
+    padding: 24px 20px;
+    border-radius: 14px;
+  }
+
+  .componentContainer > :global(.page) {
+    padding: 0;
+  }
 }
