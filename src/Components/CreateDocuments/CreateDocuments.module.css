@@ -613,75 +613,104 @@
 .primaryButton,
 .secondaryButton,
 .draftButton {
-  min-height: 43px;
-  padding: 0 18px;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 750;
-  cursor: pointer;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease,
-    background-color 150ms ease,
-    border-color 150ms ease;
-}
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 22px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-.primaryButton {
   color: #ffffff;
-  background: #173e5d;
+  background: linear-gradient(
+    180deg,
+    #1f4b70 0%,
+    #173e5d 100%
+  );
+
   border: 1px solid #173e5d;
-  box-shadow: 0 6px 16px rgba(23, 62, 93, 0.18);
+  border-radius: 8px;
+
+  box-shadow: 0 8px 20px rgba(23, 62, 93, 0.18);
+
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
 }
 
-.primaryButton:hover:not(:disabled) {
-  background: #0f324e;
-  border-color: #0f324e;
-  box-shadow: 0 8px 20px rgba(23, 62, 93, 0.24);
-  transform: translateY(-1px);
+.primaryButton:hover:not(:disabled),
+.secondaryButton:hover:not(:disabled),
+.draftButton:hover:not(:disabled) {
+  color: #ffffff;
+  background: linear-gradient(
+    180deg,
+    #28597d 0%,
+    #1c4868 100%
+  );
+  border-color: #1c4868;
+  box-shadow: 0 12px 26px rgba(23, 62, 93, 0.28);
+  transform: translateY(-2px);
 }
 
-.secondaryButton {
-  color: #245473;
-  background: #ffffff;
-  border: 1px solid #7fa3b9;
-}
-
-.secondaryButton:hover:not(:disabled) {
-  background: #f1f7fa;
-  border-color: #4e809d;
-  transform: translateY(-1px);
+.primaryButton:active:not(:disabled),
+.secondaryButton:active:not(:disabled),
+.draftButton:active:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    #173e5d 0%,
+    #102f49 100%
+  );
+  box-shadow: 0 5px 12px rgba(23, 62, 93, 0.18);
+  transform: translateY(0);
 }
 
 /*
   Botón preparado para la futura funcionalidad de borradores.
 
 .draftButton {
-  color: #526879;
-  background: #f5f8fa;
-  border: 1px solid #cfdbe2;
+  color: #ffffff;
+  background: linear-gradient(
+    180deg,
+    #537489 0%,
+    #3e5e74 100%
+  );
+  border-color: #3e5e74;
 }
 
 .draftButton:hover:not(:disabled) {
-  color: #244d69;
-  background: #eaf2f6;
-  border-color: #9bb7c8;
-  transform: translateY(-1px);
+  background: linear-gradient(
+    180deg,
+    #61849a 0%,
+    #4a6c84 100%
+  );
+  border-color: #4a6c84;
 }
 */
 
 .primaryButton:focus-visible,
 .secondaryButton:focus-visible,
 .draftButton:focus-visible {
-  outline: 3px solid rgba(64, 126, 162, 0.3);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(59, 126, 170, 0.18),
+    0 8px 20px rgba(23, 62, 93, 0.22);
 }
 
 .primaryButton:disabled,
 .secondaryButton:disabled,
 .draftButton:disabled {
   cursor: not-allowed;
-  opacity: 0.62;
+  opacity: 0.55;
+  box-shadow: none;
   transform: none;
 }
 
