@@ -502,20 +502,27 @@ const CreateDocuments = ({ embedded = true }) => {
   };
 
   const getSectionStatus = (sectionId) => {
-    const configuration = sectionsConfiguration[sectionId];
+  const configuration = sectionsConfiguration[sectionId];
 
-    const requiredCompleted = configuration.required.filter((path) =>
-      isCompletedValue(getNestedValue(input, path))
-    ).length;
+  const requiredCompleted = configuration.required.filter((path) =>
+    isCompletedValue(getNestedValue(input, path))
+  ).length;
 
-    const totalCompleted = configuration.total.filter((path) =>
-      isCompletedValue(getNestedValue(input, path))
-    ).length;
+  const totalCompleted = configuration.total.filter((path) =>
+    isCompletedValue(getNestedValue(input, path))
+  ).length;
 
-    if (
-      configuration.required.length > 0 &&
-      requiredCompleted === configuration.required.length
-    ) {
+  const allRequiredCompleted =
+    configuration.required.length > 0 &&
+    requiredCompleted === configuration.required.length;
+
+  const allFieldsCompleted =
+    configuration.total.length > 0 &&
+    totalCompleted === configuration.total.length;
+
+  // Sección con campos obligatorios
+  if (configuration.required.length > 0) {
+    if (allRequiredCompleted) {
       return {
         label: "Completo",
         type: "Complete",
@@ -529,18 +536,32 @@ const CreateDocuments = ({ embedded = true }) => {
       };
     }
 
-    if (configuration.required.length === 0) {
-      return {
-        label: "Opcional",
-        type: "Optional",
-      };
-    }
-
     return {
       label: "Pendiente",
       type: "Pending",
     };
+  }
+
+  // Sección completamente opcional
+  if (allFieldsCompleted) {
+    return {
+      label: "Completo",
+      type: "Complete",
+    };
+  }
+
+  if (totalCompleted > 0) {
+    return {
+      label: "En progreso",
+      type: "Progress",
+    };
+  }
+
+  return {
+    label: "Opcional",
+    type: "Optional",
   };
+};
 
   const getOverallProgress = () => {
     const allPaths = Object.values(sectionsConfiguration).flatMap(
@@ -653,7 +674,7 @@ const CreateDocuments = ({ embedded = true }) => {
 
   const handleCreateHearingRecord = () => {
     downloadDocument({
-      endpoint: "/fill/template_11",
+      endpoint: "/fill/actaAudienciaVirtual",
       fileName: "acta-audiencia-virtual.docx",
       documentType: "hearing",
     });
