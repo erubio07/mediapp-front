@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../Redux/actions";
 import { useAuth } from "../AuthProvider/AuthProvider";
 import { Link, NavLink, useNavigate } from "react-router";
-import styles from "./NavBar.module.css";
+import styles from "./Navbar.module.css";
 
 const DocumentIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
