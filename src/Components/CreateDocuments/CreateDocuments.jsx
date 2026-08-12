@@ -3,7 +3,7 @@ import axios from "axios";
 import styles from "./CreateDocuments.module.css";
 
 const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3000";
+  import.meta.env.VITE_API_URL || "https://electrical-tilly-ezequielrubio-cdf1c33e.koyeb.app";
 
 const initialState = {
   expediente: "",

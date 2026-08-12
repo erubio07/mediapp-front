@@ -4,7 +4,7 @@ import axios from "axios";
 export const getUserById = (id) => {
   // console.log("UserId en Actions: ", id);
   return async function (dispatch) {
-    let user = await axios.get(`http://localhost:3000/user/${id}`);
+    let user = await axios.get(`https://electrical-tilly-ezequielrubio-cdf1c33e.koyeb.app/user/${id}`);
     // console.log(user);
     return dispatch({
       type: GET_USER_BY_ID,
