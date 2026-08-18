@@ -10,11 +10,7 @@ import Form from "react-bootstrap/Form";
 import styles from "./Home.module.css";
 
 const UserIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className={styles.inputIcon}
-  >
+  <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.inputIcon}>
     <circle
       cx="12"
       cy="8"
@@ -35,11 +31,7 @@ const UserIcon = () => (
 );
 
 const LockIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    className={styles.inputIcon}
-  >
+  <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.inputIcon}>
     <rect
       x="5"
       y="10"
@@ -124,13 +116,12 @@ const Home = () => {
         return;
       }
 
-      const data = await axios.post(
-        "https://electrical-tilly-ezequielrubio-cdf1c33e.koyeb.app/login",
-        {
-          username,
-          password,
-        }
-      );
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+      const data = await axios.post(`${API_URL}/login`, {
+        username,
+        password,
+      });
 
       const userData = data.data;
 
@@ -148,24 +139,24 @@ const Home = () => {
 
         navigate("/dashboard");
       }
-    }  catch (error) {
-  console.log("ERROR COMPLETO:", error);
-  console.log("RESPUESTA BACKEND:", error.response?.data);
+    } catch (error) {
+      console.log("ERROR COMPLETO:", error);
+      console.log("RESPUESTA BACKEND:", error.response?.data);
 
-  if (error.response?.data?.error) {
-    Swal.fire({
-      icon: "error",
-      title: "No fue posible iniciar sesión",
-      text: error.response.data.error,
-      confirmButtonColor: "#173e5d",
-    });
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "No fue posible iniciar sesión",
-      text: "Verifique los datos ingresados e intente nuevamente.",
-      confirmButtonColor: "#173e5d",
-    });
+      if (error.response?.data?.error) {
+        Swal.fire({
+          icon: "error",
+          title: "No fue posible iniciar sesión",
+          text: error.response.data.error,
+          confirmButtonColor: "#173e5d",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "No fue posible iniciar sesión",
+          text: "Verifique los datos ingresados e intente nuevamente.",
+          confirmButtonColor: "#173e5d",
+        });
       }
     }
   };
@@ -203,8 +194,8 @@ const Home = () => {
             </h1>
 
             <p className={styles.institutionalDescription}>
-              Centralice la información de cada expediente y genere
-              documentos de mediación de forma ágil y ordenada.
+              Centralice la información de cada expediente y genere documentos
+              de mediación de forma ágil y ordenada.
             </p>
 
             <div className={styles.featureList}>
@@ -216,10 +207,7 @@ const Home = () => {
                 <div>
                   <strong>Gestión documental</strong>
 
-                  <p>
-                    Complete y genere documentación desde un único
-                    entorno.
-                  </p>
+                  <p>Complete y genere documentación desde un único entorno.</p>
                 </div>
               </div>
 
@@ -232,8 +220,8 @@ const Home = () => {
                   <strong>Acceso protegido</strong>
 
                   <p>
-                    La información se encuentra disponible únicamente
-                    para usuarios autorizados.
+                    La información se encuentra disponible únicamente para
+                    usuarios autorizados.
                   </p>
                 </div>
               </div>
@@ -248,9 +236,7 @@ const Home = () => {
         <div className={styles.formPanel}>
           <div className={styles.home}>
             <div className={styles.formHeader}>
-              <span className={styles.formEyebrow}>
-                Acceso al sistema
-              </span>
+              <span className={styles.formEyebrow}>Acceso al sistema</span>
 
               <h2 className={styles.title}>Iniciar sesión</h2>
 
@@ -259,18 +245,12 @@ const Home = () => {
               </p>
             </div>
 
-            <Form
-              onSubmit={handleLogin}
-              className={styles.form}
-              noValidate
-            >
+            <Form onSubmit={handleLogin} className={styles.form} noValidate>
               <Form.Group
                 className={styles.formGroup}
                 controlId="formBasicEmail"
               >
-                <Form.Label className={styles.label}>
-                  Usuario
-                </Form.Label>
+                <Form.Label className={styles.label}>Usuario</Form.Label>
 
                 <div className={styles.inputWrapper}>
                   <UserIcon />
@@ -291,9 +271,7 @@ const Home = () => {
                 controlId="formBasicPassword"
               >
                 <div className={styles.labelRow}>
-                  <Form.Label className={styles.label}>
-                    Contraseña
-                  </Form.Label>
+                  <Form.Label className={styles.label}>Contraseña</Form.Label>
                 </div>
 
                 <div className={styles.inputWrapper}>
@@ -310,17 +288,9 @@ const Home = () => {
                 </div>
               </Form.Group>
 
-              <Button
-                variant="primary"
-                type="submit"
-                className={styles.button}
-              >
+              <Button variant="primary" type="submit" className={styles.button}>
                 Iniciar sesión
-
-                <span
-                  className={styles.buttonArrow}
-                  aria-hidden="true"
-                >
+                <span className={styles.buttonArrow} aria-hidden="true">
                   →
                 </span>
               </Button>
@@ -341,9 +311,7 @@ const Home = () => {
                 <ShieldIcon />
               </span>
 
-              <p>
-                Acceso reservado para usuarios autorizados.
-              </p>
+              <p>Acceso reservado para usuarios autorizados.</p>
             </div>
           </div>
         </div>

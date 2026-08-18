@@ -2,8 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import styles from "./CreateDocuments.module.css";
 
-const API_URL =
-  import.meta.env.VITE_API_URL || "https://electrical-tilly-ezequielrubio-cdf1c33e.koyeb.app";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const initialState = {
   expediente: "",
@@ -97,21 +96,11 @@ const sectionsConfiguration = {
   expediente: {
     required: ["expediente", "number", "date"],
 
-    total: [
-      "expediente",
-      "number",
-      "date",
-      "start",
-      "end",
-      "nextDate",
-    ],
+    total: ["expediente", "number", "date", "start", "end", "nextDate"],
   },
 
   requirente: {
-    required: [
-      "requirente.name",
-      "requirente.dni",
-    ],
+    required: ["requirente.name", "requirente.dni"],
 
     total: [
       "requirente.name",
@@ -140,10 +129,7 @@ const sectionsConfiguration = {
   },
 
   requerido: {
-    required: [
-      "requerido.name",
-      "requerido.dni",
-    ],
+    required: ["requerido.name", "requerido.dni"],
 
     total: [
       "requerido.name",
@@ -242,12 +228,9 @@ const requiredFields = [
 ===================================================== */
 
 function getNestedValue(object, path) {
-  return path.split(".").reduce(
-    (currentValue, key) => {
-      return currentValue?.[key];
-    },
-    object
-  );
+  return path.split(".").reduce((currentValue, key) => {
+    return currentValue?.[key];
+  }, object);
 }
 
 function setNestedValue(object, path, value) {
@@ -258,14 +241,12 @@ function setNestedValue(object, path, value) {
   let currentLevel = result;
 
   keys.forEach((key, index) => {
-    const isLastKey =
-      index === keys.length - 1;
+    const isLastKey = index === keys.length - 1;
 
     if (isLastKey) {
       currentLevel[key] = value;
     } else {
-      currentLevel =
-        currentLevel[key];
+      currentLevel = currentLevel[key];
     }
   });
 
@@ -273,9 +254,7 @@ function setNestedValue(object, path, value) {
 }
 
 function isCompletedValue(value) {
-  return (
-    String(value ?? "").trim() !== ""
-  );
+  return String(value ?? "").trim() !== "";
 }
 
 /* =====================================================
@@ -283,10 +262,7 @@ function isCompletedValue(value) {
 ===================================================== */
 
 const DocumentIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-  >
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <path
       d="M6 2h8l4 4v16H6V2Z"
       fill="none"
@@ -305,10 +281,7 @@ const DocumentIcon = () => (
 );
 
 const PersonIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-  >
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <circle
       cx="12"
       cy="8"
@@ -329,10 +302,7 @@ const PersonIcon = () => (
 );
 
 const UsersIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-  >
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <circle
       cx="9"
       cy="8"
@@ -362,10 +332,7 @@ const UsersIcon = () => (
 );
 
 const CheckIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-  >
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <path
       d="m5 12 4.2 4.2L19 6.5"
       fill="none"
@@ -377,15 +344,9 @@ const CheckIcon = () => (
   </svg>
 );
 
-const ChevronIcon = ({
-  isOpen,
-}) => (
+const ChevronIcon = ({ isOpen }) => (
   <svg
-    className={`${styles.chevron} ${
-      isOpen
-        ? styles.chevronOpen
-        : ""
-    }`}
+    className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ""}`}
     viewBox="0 0 24 24"
     aria-hidden="true"
   >
@@ -415,35 +376,15 @@ const Field = ({
   fullWidth = false,
   autoComplete = "off",
 }) => (
-  <div
-    className={`${styles.fieldGroup} ${
-      fullWidth
-        ? styles.fullWidth
-        : ""
-    }`}
-  >
-    <label
-      className={styles.label}
-      htmlFor={name}
-    >
+  <div className={`${styles.fieldGroup} ${fullWidth ? styles.fullWidth : ""}`}>
+    <label className={styles.label} htmlFor={name}>
       {label}
 
       {required && (
         <>
-          <span
-            className={
-              styles.requiredMark
-            }
-          >
-            *
-          </span>
+          <span className={styles.requiredMark}>*</span>
 
-          <span
-            className={styles.srOnly}
-          >
-            {" "}
-            obligatorio
-          </span>
+          <span className={styles.srOnly}> obligatorio</span>
         </>
       )}
     </label>
@@ -465,43 +406,17 @@ const Field = ({
    SUBSECCIÓN
 ===================================================== */
 
-const Subsection = ({
-  title,
-  description,
-  children,
-}) => (
-  <section
-    className={styles.subsection}
-  >
-    <div
-      className={
-        styles.subsectionHeader
-      }
-    >
-      <h3
-        className={
-          styles.subsectionTitle
-        }
-      >
-        {title}
-      </h3>
+const Subsection = ({ title, description, children }) => (
+  <section className={styles.subsection}>
+    <div className={styles.subsectionHeader}>
+      <h3 className={styles.subsectionTitle}>{title}</h3>
 
       {description && (
-        <p
-          className={
-            styles.subsectionDescription
-          }
-        >
-          {description}
-        </p>
+        <p className={styles.subsectionDescription}>{description}</p>
       )}
     </div>
 
-    <div
-      className={styles.fieldsGrid}
-    >
-      {children}
-    </div>
+    <div className={styles.fieldsGrid}>{children}</div>
   </section>
 );
 
@@ -522,98 +437,39 @@ const AccordionSection = ({
   children,
 }) => (
   <section
-    className={`${
-      styles.accordionSection
-    } ${
-      isOpen
-        ? styles.accordionSectionOpen
-        : ""
+    className={`${styles.accordionSection} ${
+      isOpen ? styles.accordionSectionOpen : ""
     }`}
   >
     <button
       type="button"
-      className={
-        styles.accordionHeader
-      }
+      className={styles.accordionHeader}
       onClick={() => onToggle(id)}
       aria-expanded={isOpen}
       aria-controls={`${id}-content`}
     >
-      <span
-        className={
-          styles.sectionIdentity
-        }
-      >
-        <span
-          className={
-            styles.sectionNumber
-          }
-        >
-          {number}
-        </span>
+      <span className={styles.sectionIdentity}>
+        <span className={styles.sectionNumber}>{number}</span>
 
-        <span
-          className={
-            styles.sectionIcon
-          }
-        >
-          {icon}
-        </span>
+        <span className={styles.sectionIcon}>{icon}</span>
 
-        <span
-          className={
-            styles.sectionHeading
-          }
-        >
-          <span
-            className={
-              styles.sectionTitle
-            }
-          >
-            {title}
-          </span>
+        <span className={styles.sectionHeading}>
+          <span className={styles.sectionTitle}>{title}</span>
 
-          <span
-            className={
-              styles.sectionDescription
-            }
-          >
-            {description}
-          </span>
+          <span className={styles.sectionDescription}>{description}</span>
 
-          <span
-            className={
-              styles.sectionProgressText
-            }
-          >
-            {progress.completed} de{" "}
-            {progress.total} campos
-            completos
+          <span className={styles.sectionProgressText}>
+            {progress.completed} de {progress.total} campos completos
           </span>
         </span>
       </span>
 
-      <span
-        className={
-          styles.sectionMeta
-        }
-      >
+      <span className={styles.sectionMeta}>
         <span
-          className={`${
-            styles.statusBadge
-          } ${
-            styles[
-              `status${status.type}`
-            ]
-          }`}
+          className={`${styles.statusBadge} ${styles[`status${status.type}`]}`}
         >
-          {status.type ===
-            "Complete" && (
-            <span
-              className={
-                styles.statusIcon
-              }
-            >
+          {status.type === "Complete" && (
+            <span className={styles.statusIcon}>
               <CheckIcon />
             </span>
           )}
@@ -621,29 +477,17 @@ const AccordionSection = ({
           {status.label}
         </span>
 
-        <ChevronIcon
-          isOpen={isOpen}
-        />
+        <ChevronIcon isOpen={isOpen} />
       </span>
     </button>
 
     <div
       id={`${id}-content`}
-      className={`${
-        styles.accordionContent
-      } ${
-        isOpen
-          ? styles.accordionContentOpen
-          : ""
+      className={`${styles.accordionContent} ${
+        isOpen ? styles.accordionContentOpen : ""
       }`}
     >
-      <div
-        className={
-          styles.accordionInner
-        }
-      >
-        {children}
-      </div>
+      <div className={styles.accordionInner}>{children}</div>
     </div>
   </section>
 );
@@ -652,26 +496,14 @@ const AccordionSection = ({
    COMPONENTE
 ===================================================== */
 
-const CreateDocuments = ({
-  embedded = true,
-}) => {
-  const [input, setInput] =
-    useState(initialState);
+const CreateDocuments = ({ embedded = true }) => {
+  const [input, setInput] = useState(initialState);
 
-  const [
-    openSection,
-    setOpenSection,
-  ] = useState("expediente");
+  const [openSection, setOpenSection] = useState("expediente");
 
-  const [
-    formError,
-    setFormError,
-  ] = useState("");
+  const [formError, setFormError] = useState("");
 
-  const [
-    loadingDocument,
-    setLoadingDocument,
-  ] = useState("");
+  const [loadingDocument, setLoadingDocument] = useState("");
 
   /*
     Estados preparados para futura implementación:
@@ -689,18 +521,9 @@ const CreateDocuments = ({
   ===================================================== */
 
   const handleInput = (event) => {
-    const {
-      name,
-      value,
-    } = event.target;
+    const { name, value } = event.target;
 
-    setInput((currentInput) =>
-      setNestedValue(
-        currentInput,
-        name,
-        value
-      )
-    );
+    setInput((currentInput) => setNestedValue(currentInput, name, value));
 
     if (formError) {
       setFormError("");
@@ -718,14 +541,9 @@ const CreateDocuments = ({
      ACORDEÓN
   ===================================================== */
 
-  const handleToggleSection = (
-    sectionId
-  ) => {
-    setOpenSection(
-      (currentSection) =>
-        currentSection === sectionId
-          ? ""
-          : sectionId
+  const handleToggleSection = (sectionId) => {
+    setOpenSection((currentSection) =>
+      currentSection === sectionId ? "" : sectionId,
     );
 
     /*
@@ -741,29 +559,16 @@ const CreateDocuments = ({
      PROGRESO
   ===================================================== */
 
-  const getSectionProgress = (
-    sectionId
-  ) => {
-    const configuration =
-      sectionsConfiguration[
-        sectionId
-      ];
+  const getSectionProgress = (sectionId) => {
+    const configuration = sectionsConfiguration[sectionId];
 
-    const completed =
-      configuration.total.filter(
-        (path) =>
-          isCompletedValue(
-            getNestedValue(
-              input,
-              path
-            )
-          )
-      ).length;
+    const completed = configuration.total.filter((path) =>
+      isCompletedValue(getNestedValue(input, path)),
+    ).length;
 
     return {
       completed,
-      total:
-        configuration.total.length,
+      total: configuration.total.length,
     };
   };
 
@@ -771,52 +576,26 @@ const CreateDocuments = ({
      ESTADO SECCIÓN
   ===================================================== */
 
-  const getSectionStatus = (
-    sectionId
-  ) => {
-    const configuration =
-      sectionsConfiguration[
-        sectionId
-      ];
+  const getSectionStatus = (sectionId) => {
+    const configuration = sectionsConfiguration[sectionId];
 
-    const requiredCompleted =
-      configuration.required.filter(
-        (path) =>
-          isCompletedValue(
-            getNestedValue(
-              input,
-              path
-            )
-          )
-      ).length;
+    const requiredCompleted = configuration.required.filter((path) =>
+      isCompletedValue(getNestedValue(input, path)),
+    ).length;
 
-    const totalCompleted =
-      configuration.total.filter(
-        (path) =>
-          isCompletedValue(
-            getNestedValue(
-              input,
-              path
-            )
-          )
-      ).length;
+    const totalCompleted = configuration.total.filter((path) =>
+      isCompletedValue(getNestedValue(input, path)),
+    ).length;
 
     const allRequiredCompleted =
-      configuration.required.length >
-        0 &&
-      requiredCompleted ===
-        configuration.required.length;
+      configuration.required.length > 0 &&
+      requiredCompleted === configuration.required.length;
 
     const allFieldsCompleted =
-      configuration.total.length >
-        0 &&
-      totalCompleted ===
-        configuration.total.length;
+      configuration.total.length > 0 &&
+      totalCompleted === configuration.total.length;
 
-    if (
-      configuration.required.length >
-      0
-    ) {
+    if (configuration.required.length > 0) {
       if (allRequiredCompleted) {
         return {
           label: "Completo",
@@ -862,32 +641,18 @@ const CreateDocuments = ({
   ===================================================== */
 
   const getOverallProgress = () => {
-    const allPaths =
-      Object.values(
-        sectionsConfiguration
-      ).flatMap(
-        (section) =>
-          section.total
-      );
+    const allPaths = Object.values(sectionsConfiguration).flatMap(
+      (section) => section.total,
+    );
 
-    const completed =
-      allPaths.filter((path) =>
-        isCompletedValue(
-          getNestedValue(
-            input,
-            path
-          )
-        )
-      ).length;
+    const completed = allPaths.filter((path) =>
+      isCompletedValue(getNestedValue(input, path)),
+    ).length;
 
     const percentage =
       allPaths.length === 0
         ? 0
-        : Math.round(
-            (completed /
-              allPaths.length) *
-              100
-          );
+        : Math.round((completed / allPaths.length) * 100);
 
     return {
       completed,
@@ -901,20 +666,11 @@ const CreateDocuments = ({
   ===================================================== */
 
   const validateForm = () => {
-    const missingField =
-      requiredFields.find(
-        (field) => {
-          const value =
-            getNestedValue(
-              input,
-              field.path
-            );
+    const missingField = requiredFields.find((field) => {
+      const value = getNestedValue(input, field.path);
 
-          return !isCompletedValue(
-            value
-          );
-        }
-      );
+      return !isCompletedValue(value);
+    });
 
     if (!missingField) {
       setFormError("");
@@ -922,22 +678,14 @@ const CreateDocuments = ({
     }
 
     setFormError(
-      `Falta completar el campo obligatorio: ${missingField.label}.`
+      `Falta completar el campo obligatorio: ${missingField.label}.`,
     );
 
-    setOpenSection(
-      missingField.section
-    );
+    setOpenSection(missingField.section);
 
-    window.requestAnimationFrame(
-      () => {
-        document
-          .getElementById(
-            missingField.path
-          )
-          ?.focus();
-      }
-    );
+    window.requestAnimationFrame(() => {
+      document.getElementById(missingField.path)?.focus();
+    });
 
     return false;
   };
@@ -946,61 +694,44 @@ const CreateDocuments = ({
      DESCARGAR DOCUMENTO
   ===================================================== */
 
-  const downloadDocument = async ({
-    endpoint,
-    fileName,
-    documentType,
-  }) => {
+  const downloadDocument = async ({ endpoint, fileName, documentType }) => {
     if (!validateForm()) {
       return;
     }
 
     try {
-      setLoadingDocument(
-        documentType
-      );
+      setLoadingDocument(documentType);
 
       setFormError("");
 
-      const response =
-        await axios.post(
-          `${API_URL}${endpoint}`,
-          input,
-          {
-            responseType: "blob",
-          }
-        );
+      const accessToken = localStorage.getItem("accessToken");
 
-      const blob = new Blob(
-        [response.data],
-        {
-          type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        }
-      );
+      const response = await axios.post(`${API_URL}${endpoint}`, input, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-      const url =
-        window.URL.createObjectURL(
-          blob
-        );
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      });
 
-      const link =
-        document.createElement("a");
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
 
       link.href = url;
 
       link.download = fileName;
 
-      document.body.appendChild(
-        link
-      );
+      document.body.appendChild(link);
 
       link.click();
 
       link.remove();
 
-      window.URL.revokeObjectURL(
-        url
-      );
+      window.URL.revokeObjectURL(url);
 
       /*
         Futuro:
@@ -1009,15 +740,11 @@ const CreateDocuments = ({
         setSaveStatus("saved");
       */
     } catch (error) {
-      console.error(
-        "Error descargando el documento:",
-        error
-      );
+      console.error("Error descargando el documento:", error);
 
       setFormError(
-        error.response?.data
-          ?.error ||
-          "No fue posible generar el documento. Verificá la conexión e intentá nuevamente."
+        error.response?.data?.error ||
+          "No fue posible generar el documento. Verificá la conexión e intentá nuevamente.",
       );
     } finally {
       setLoadingDocument("");
@@ -1028,50 +755,39 @@ const CreateDocuments = ({
      GENERAR CONVENIO
   ===================================================== */
 
-  const handleCreateAgreement =
-    () => {
-      downloadDocument({
-        endpoint: "/fill",
-        fileName:
-          "convenio-confidencialidad-judicial-virtual.docx",
-        documentType:
-          "agreement",
-      });
-    };
+  const handleCreateAgreement = () => {
+    downloadDocument({
+      endpoint: "/fill",
+      fileName: "convenio-confidencialidad-judicial-virtual.docx",
+      documentType: "agreement",
+    });
+  };
 
   /* =====================================================
      GENERAR ACTA AUDIENCIA
   ===================================================== */
 
-  const handleCreateHearingRecord =
-    () => {
-      downloadDocument({
-        endpoint:
-          "/fill/actaAudienciaVirtual",
-        fileName:
-          "acta-audiencia-virtual.docx",
-        documentType:
-          "hearing",
-      });
-    };
+  const handleCreateHearingRecord = () => {
+    downloadDocument({
+      endpoint: "/fill/actaAudienciaVirtual",
+      fileName: "acta-audiencia-virtual.docx",
+      documentType: "hearing",
+    });
+  };
 
   /* =====================================================
      GENERAR ACTA CIERRE
   ===================================================== */
 
-  const handleCreateClosingRecord =
-    () => {
-      downloadDocument({
-        endpoint:
-          "/fill/actaCierre",
+  const handleCreateClosingRecord = () => {
+    downloadDocument({
+      endpoint: "/fill/actaCierre",
 
-        fileName:
-          "acta-cierre-mediacion.docx",
+      fileName: "acta-cierre-mediacion.docx",
 
-        documentType:
-          "closing",
-      });
-    };
+      documentType: "closing",
+    });
+  };
 
   /*
     =====================================================
@@ -1243,78 +959,30 @@ const CreateDocuments = ({
       };
   */
 
-  const overallProgress =
-    getOverallProgress();
+  const overallProgress = getOverallProgress();
 
-  const isGenerating =
-    Boolean(
-      loadingDocument
-    );
+  const isGenerating = Boolean(loadingDocument);
 
   return (
-    <main
-      className={`${
-        styles.page
-      } ${
-        embedded
-          ? styles.embedded
-          : ""
-      }`}
-    >
-      <div
-        className={
-          styles.container
-        }
-      >
+    <main className={`${styles.page} ${embedded ? styles.embedded : ""}`}>
+      <div className={styles.container}>
         {/* ===============================
             HEADER
         =============================== */}
 
-        <header
-          className={
-            styles.pageHeader
-          }
-        >
-          <div
-            className={
-              styles.headerInformation
-            }
-          >
-            <span
-              className={
-                styles.eyebrow
-              }
-            >
-              Gestión documental
-            </span>
+        <header className={styles.pageHeader}>
+          <div className={styles.headerInformation}>
+            <span className={styles.eyebrow}>Gestión documental</span>
 
-            <h1
-              className={
-                styles.pageTitle
-              }
-            >
-              Crear documentos de
-              mediación
-            </h1>
+            <h1 className={styles.pageTitle}>Crear documentos de mediación</h1>
 
-            <p
-              className={
-                styles.pageDescription
-              }
-            >
-              Complete la información
-              necesaria para generar la
-              documentación
-              correspondiente a la
-              audiencia.
+            <p className={styles.pageDescription}>
+              Complete la información necesaria para generar la documentación
+              correspondiente a la audiencia.
             </p>
           </div>
 
-          <div
-            className={
-              styles.headerActions
-            }
-          >
+          <div className={styles.headerActions}>
             {/*
               <button
                 type="button"
@@ -1328,11 +996,7 @@ const CreateDocuments = ({
               </button>
             */}
 
-            <div
-              className={
-                styles.documentMark
-              }
-            >
+            <div className={styles.documentMark}>
               <DocumentIcon />
             </div>
           </div>
@@ -1343,69 +1007,34 @@ const CreateDocuments = ({
         =============================== */}
 
         <section
-          className={
-            styles.progressPanel
-          }
+          className={styles.progressPanel}
           aria-label="Progreso general del documento"
         >
-          <div
-            className={
-              styles.progressInformation
-            }
-          >
+          <div className={styles.progressInformation}>
             <div>
-              <span
-                className={
-                  styles.progressLabel
-                }
-              >
-                Progreso del
-                documento
+              <span className={styles.progressLabel}>
+                Progreso del documento
               </span>
 
-              <strong
-                className={
-                  styles.progressValue
-                }
-              >
-                {
-                  overallProgress.percentage
-                }
-                % completado
+              <strong className={styles.progressValue}>
+                {overallProgress.percentage}% completado
               </strong>
             </div>
 
-            <span
-              className={
-                styles.progressCounter
-              }
-            >
-              {
-                overallProgress.completed
-              }{" "}
-              de{" "}
-              {
-                overallProgress.total
-              }{" "}
-              campos
+            <span className={styles.progressCounter}>
+              {overallProgress.completed} de {overallProgress.total} campos
             </span>
           </div>
 
           <div
-            className={
-              styles.progressTrack
-            }
+            className={styles.progressTrack}
             role="progressbar"
             aria-valuemin="0"
             aria-valuemax="100"
-            aria-valuenow={
-              overallProgress.percentage
-            }
+            aria-valuenow={overallProgress.percentage}
           >
             <span
-              className={
-                styles.progressBar
-              }
+              className={styles.progressBar}
               style={{
                 width: `${overallProgress.percentage}%`,
               }}
@@ -1424,125 +1053,45 @@ const CreateDocuments = ({
         =============================== */}
 
         <section
-          className={
-            styles.summaryPanel
-          }
+          className={styles.summaryPanel}
           aria-label="Resumen del formulario"
         >
-          <div
-            className={
-              styles.summaryItem
-            }
-          >
-            <span
-              className={
-                styles.summaryLabel
-              }
-            >
-              Expediente
-            </span>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Expediente</span>
 
-            <strong
-              className={
-                styles.summaryValue
-              }
-            >
-              {input.number ||
-                "Sin completar"}
+            <strong className={styles.summaryValue}>
+              {input.number || "Sin completar"}
             </strong>
           </div>
 
-          <div
-            className={
-              styles.summaryItem
-            }
-          >
-            <span
-              className={
-                styles.summaryLabel
-              }
-            >
-              Audiencia
-            </span>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Audiencia</span>
 
-            <strong
-              className={
-                styles.summaryValue
-              }
-            >
-              {input.date ||
-                "Fecha pendiente"}
+            <strong className={styles.summaryValue}>
+              {input.date || "Fecha pendiente"}
             </strong>
           </div>
 
-          <div
-            className={
-              styles.summaryItem
-            }
-          >
-            <span
-              className={
-                styles.summaryLabel
-              }
-            >
-              Requirente
-            </span>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Requirente</span>
 
-            <strong
-              className={
-                styles.summaryValue
-              }
-            >
-              {input.requirente
-                .name ||
-                "Sin completar"}
+            <strong className={styles.summaryValue}>
+              {input.requirente.name || "Sin completar"}
             </strong>
           </div>
 
-          <div
-            className={
-              styles.summaryItem
-            }
-          >
-            <span
-              className={
-                styles.summaryLabel
-              }
-            >
-              Requerido
-            </span>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Requerido</span>
 
-            <strong
-              className={
-                styles.summaryValue
-              }
-            >
-              {input.requerido
-                .name ||
-                "Sin completar"}
+            <strong className={styles.summaryValue}>
+              {input.requerido.name || "Sin completar"}
             </strong>
           </div>
 
-          <div
-            className={
-              styles.summaryItem
-            }
-          >
-            <span
-              className={
-                styles.summaryLabel
-              }
-            >
-              Estado
-            </span>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Estado</span>
 
-            <span
-              className={
-                styles.draftBadge
-              }
-            >
-              En edición
-            </span>
+            <span className={styles.draftBadge}>En edición</span>
           </div>
         </section>
 
@@ -1550,54 +1099,22 @@ const CreateDocuments = ({
             AYUDA
         =============================== */}
 
-        <div
-          className={
-            styles.helpMessage
-          }
-        >
-          <span
-            className={
-              styles.helpIcon
-            }
-          >
-            i
-          </span>
+        <div className={styles.helpMessage}>
+          <span className={styles.helpIcon}>i</span>
 
           <p>
             Los campos señalados con{" "}
-            <strong
-              className={
-                styles.requiredMark
-              }
-            >
-              *
-            </strong>{" "}
-            son obligatorios. Puede
-            abrir y cerrar las
-            secciones sin perder la
-            información cargada
+            <strong className={styles.requiredMark}>*</strong> son obligatorios.
+            Puede abrir y cerrar las secciones sin perder la información cargada
             durante esta sesión.
           </p>
         </div>
 
         {formError && (
-          <div
-            className={
-              styles.errorAlert
-            }
-            role="alert"
-          >
-            <span
-              className={
-                styles.errorIcon
-              }
-            >
-              !
-            </span>
+          <div className={styles.errorAlert} role="alert">
+            <span className={styles.errorIcon}>!</span>
 
-            <span>
-              {formError}
-            </span>
+            <span>{formError}</span>
           </div>
         )}
 
@@ -1605,11 +1122,7 @@ const CreateDocuments = ({
             ACORDEONES
         =============================== */}
 
-        <div
-          className={
-            styles.accordion
-          }
-        >
+        <div className={styles.accordion}>
           {/* =============================
               EXPEDIENTE
           ============================= */}
@@ -1620,34 +1133,17 @@ const CreateDocuments = ({
             title="Datos del expediente"
             description="Carátula, número, fecha y horarios de la audiencia"
             icon={<DocumentIcon />}
-            status={getSectionStatus(
-              "expediente"
-            )}
-            progress={getSectionProgress(
-              "expediente"
-            )}
-            isOpen={
-              openSection ===
-              "expediente"
-            }
-            onToggle={
-              handleToggleSection
-            }
+            status={getSectionStatus("expediente")}
+            progress={getSectionProgress("expediente")}
+            isOpen={openSection === "expediente"}
+            onToggle={handleToggleSection}
           >
-            <div
-              className={
-                styles.fieldsGrid
-              }
-            >
+            <div className={styles.fieldsGrid}>
               <Field
                 label="Carátula del expediente"
                 name="expediente"
-                value={
-                  input.expediente
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.expediente}
+                onChange={handleInput}
                 placeholder="Ej.: Pérez c/ Gómez"
                 required
                 fullWidth
@@ -1657,9 +1153,7 @@ const CreateDocuments = ({
                 label="Número de expediente"
                 name="number"
                 value={input.number}
-                onChange={
-                  handleInput
-                }
+                onChange={handleInput}
                 placeholder="Ej.: EXP-12345/2026"
                 required
               />
@@ -1668,9 +1162,7 @@ const CreateDocuments = ({
                 label="Día de audiencia"
                 name="date"
                 value={input.date}
-                onChange={
-                  handleInput
-                }
+                onChange={handleInput}
                 type="date"
                 required
               />
@@ -1679,9 +1171,7 @@ const CreateDocuments = ({
                 label="Hora de inicio"
                 name="start"
                 value={input.start}
-                onChange={
-                  handleInput
-                }
+                onChange={handleInput}
                 type="time"
               />
 
@@ -1689,21 +1179,15 @@ const CreateDocuments = ({
                 label="Hora de finalización"
                 name="end"
                 value={input.end}
-                onChange={
-                  handleInput
-                }
+                onChange={handleInput}
                 type="time"
               />
 
               <Field
                 label="Próxima reunión"
                 name="nextDate"
-                value={
-                  input.nextDate
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.nextDate}
+                onChange={handleInput}
                 type="datetime-local"
                 fullWidth
               />
@@ -1720,19 +1204,10 @@ const CreateDocuments = ({
             title="Parte requirente"
             description="Datos personales, letrado y mediador interviniente"
             icon={<PersonIcon />}
-            status={getSectionStatus(
-              "requirente"
-            )}
-            progress={getSectionProgress(
-              "requirente"
-            )}
-            isOpen={
-              openSection ===
-              "requirente"
-            }
-            onToggle={
-              handleToggleSection
-            }
+            status={getSectionStatus("requirente")}
+            progress={getSectionProgress("requirente")}
+            isOpen={openSection === "requirente"}
+            onToggle={handleToggleSection}
           >
             {/* DATOS PERSONALES */}
 
@@ -1743,13 +1218,8 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="requirente.name"
-                value={
-                  input.requirente
-                    .name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
                 required
               />
@@ -1757,13 +1227,8 @@ const CreateDocuments = ({
               <Field
                 label="DNI"
                 name="requirente.dni"
-                value={
-                  input.requirente
-                    .dni
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.dni}
+                onChange={handleInput}
                 placeholder="Ej.: 30.123.456"
                 required
               />
@@ -1771,13 +1236,8 @@ const CreateDocuments = ({
               <Field
                 label="Domicilio"
                 name="requirente.adress"
-                value={
-                  input.requirente
-                    .adress
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.adress}
+                onChange={handleInput}
                 placeholder="Calle y número"
                 fullWidth
               />
@@ -1785,38 +1245,24 @@ const CreateDocuments = ({
               <Field
                 label="Localidad"
                 name="requirente.localidad"
-                value={
-                  input.requirente
-                    .localidad
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.localidad}
+                onChange={handleInput}
                 placeholder="Ej.: Córdoba"
               />
 
               <Field
                 label="Código postal"
                 name="requirente.cp"
-                value={
-                  input.requirente.cp
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.cp}
+                onChange={handleInput}
                 placeholder="Ej.: 5000"
               />
 
               <Field
                 label="Correo electrónico"
                 name="requirente.email"
-                value={
-                  input.requirente
-                    .email
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.email}
+                onChange={handleInput}
                 type="email"
                 placeholder="nombre@correo.com"
                 fullWidth
@@ -1825,13 +1271,8 @@ const CreateDocuments = ({
               <Field
                 label="Teléfono fijo"
                 name="requirente.phoneFixed"
-                value={
-                  input.requirente
-                    .phoneFixed
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.phoneFixed}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Ej.: 351 4234567"
               />
@@ -1839,13 +1280,8 @@ const CreateDocuments = ({
               <Field
                 label="Número de celular"
                 name="requirente.phoneNumber"
-                value={
-                  input.requirente
-                    .phoneNumber
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.phoneNumber}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Ej.: 351 555-0000"
               />
@@ -1860,39 +1296,24 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="requirente.letrado.name"
-                value={
-                  input.requirente
-                    .letrado.name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
               />
 
               <Field
                 label="Matrícula"
                 name="requirente.letrado.mat"
-                value={
-                  input.requirente
-                    .letrado.mat
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.mat}
+                onChange={handleInput}
                 placeholder="Ej.: 1-35318"
               />
 
               <Field
                 label="Domicilio"
                 name="requirente.letrado.adress"
-                value={
-                  input.requirente
-                    .letrado.adress
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.adress}
+                onChange={handleInput}
                 placeholder="Calle y número"
                 fullWidth
               />
@@ -1900,40 +1321,24 @@ const CreateDocuments = ({
               <Field
                 label="Localidad"
                 name="requirente.letrado.localidad"
-                value={
-                  input.requirente
-                    .letrado
-                    .localidad
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.localidad}
+                onChange={handleInput}
                 placeholder="Ej.: Córdoba"
               />
 
               <Field
                 label="Código postal"
                 name="requirente.letrado.cp"
-                value={
-                  input.requirente
-                    .letrado.cp
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.cp}
+                onChange={handleInput}
                 placeholder="Ej.: 5000"
               />
 
               <Field
                 label="Correo electrónico"
                 name="requirente.letrado.email"
-                value={
-                  input.requirente
-                    .letrado.email
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.email}
+                onChange={handleInput}
                 type="email"
                 placeholder="profesional@correo.com"
               />
@@ -1941,14 +1346,8 @@ const CreateDocuments = ({
               <Field
                 label="Número de celular"
                 name="requirente.letrado.phoneNumber"
-                value={
-                  input.requirente
-                    .letrado
-                    .phoneNumber
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.letrado.phoneNumber}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Ej.: 351 555-0000"
               />
@@ -1963,26 +1362,16 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="requirente.mediador.name"
-                value={
-                  input.requirente
-                    .mediador.name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.mediador.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
               />
 
               <Field
                 label="Matrícula"
                 name="requirente.mediador.mat"
-                value={
-                  input.requirente
-                    .mediador.mat
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requirente.mediador.mat}
+                onChange={handleInput}
                 placeholder="Número de matrícula"
               />
             </Subsection>
@@ -1998,19 +1387,10 @@ const CreateDocuments = ({
             title="Parte requerida"
             description="Datos personales, letrado y mediador interviniente"
             icon={<PersonIcon />}
-            status={getSectionStatus(
-              "requerido"
-            )}
-            progress={getSectionProgress(
-              "requerido"
-            )}
-            isOpen={
-              openSection ===
-              "requerido"
-            }
-            onToggle={
-              handleToggleSection
-            }
+            status={getSectionStatus("requerido")}
+            progress={getSectionProgress("requerido")}
+            isOpen={openSection === "requerido"}
+            onToggle={handleToggleSection}
           >
             {/* DATOS PERSONALES */}
 
@@ -2021,12 +1401,8 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="requerido.name"
-                value={
-                  input.requerido.name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
                 required
               />
@@ -2034,12 +1410,8 @@ const CreateDocuments = ({
               <Field
                 label="DNI"
                 name="requerido.dni"
-                value={
-                  input.requerido.dni
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.dni}
+                onChange={handleInput}
                 placeholder="Ej.: 30.123.456"
                 required
               />
@@ -2047,13 +1419,8 @@ const CreateDocuments = ({
               <Field
                 label="Domicilio"
                 name="requerido.adress"
-                value={
-                  input.requerido
-                    .adress
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.adress}
+                onChange={handleInput}
                 placeholder="Calle y número"
                 fullWidth
               />
@@ -2061,38 +1428,24 @@ const CreateDocuments = ({
               <Field
                 label="Localidad"
                 name="requerido.localidad"
-                value={
-                  input.requerido
-                    .localidad
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.localidad}
+                onChange={handleInput}
                 placeholder="Ej.: Villa Carlos Paz"
               />
 
               <Field
                 label="Código postal"
                 name="requerido.cp"
-                value={
-                  input.requerido.cp
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.cp}
+                onChange={handleInput}
                 placeholder="Ej.: 5152"
               />
 
               <Field
                 label="Correo electrónico"
                 name="requerido.email"
-                value={
-                  input.requerido
-                    .email
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.email}
+                onChange={handleInput}
                 type="email"
                 placeholder="nombre@correo.com"
                 fullWidth
@@ -2101,13 +1454,8 @@ const CreateDocuments = ({
               <Field
                 label="Teléfono fijo"
                 name="requerido.phoneFixed"
-                value={
-                  input.requerido
-                    .phoneFixed
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.phoneFixed}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Ej.: 3541 423344"
               />
@@ -2115,13 +1463,8 @@ const CreateDocuments = ({
               <Field
                 label="Número de celular"
                 name="requerido.phoneNumber"
-                value={
-                  input.requerido
-                    .phoneNumber
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.phoneNumber}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Ej.: 3541 556677"
               />
@@ -2136,39 +1479,24 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="requerido.letrado.name"
-                value={
-                  input.requerido
-                    .letrado.name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.letrado.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
               />
 
               <Field
                 label="Matrícula"
                 name="requerido.letrado.mat"
-                value={
-                  input.requerido
-                    .letrado.mat
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.letrado.mat}
+                onChange={handleInput}
                 placeholder="Ej.: 1-34567"
               />
 
               <Field
                 label="Domicilio"
                 name="requerido.letrado.adress"
-                value={
-                  input.requerido
-                    .letrado.adress
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.letrado.adress}
+                onChange={handleInput}
                 placeholder="Calle, número y localidad"
                 fullWidth
               />
@@ -2176,13 +1504,8 @@ const CreateDocuments = ({
               <Field
                 label="Correo electrónico"
                 name="requerido.letrado.email"
-                value={
-                  input.requerido
-                    .letrado.email
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.letrado.email}
+                onChange={handleInput}
                 type="email"
                 placeholder="profesional@correo.com"
               />
@@ -2190,14 +1513,8 @@ const CreateDocuments = ({
               <Field
                 label="Número de celular"
                 name="requerido.letrado.phoneNumber"
-                value={
-                  input.requerido
-                    .letrado
-                    .phoneNumber
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.letrado.phoneNumber}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Ej.: 351 555-0000"
               />
@@ -2212,26 +1529,16 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="requerido.mediador.name"
-                value={
-                  input.requerido
-                    .mediador.name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.mediador.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
               />
 
               <Field
                 label="Matrícula"
                 name="requerido.mediador.mat"
-                value={
-                  input.requerido
-                    .mediador.mat
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.requerido.mediador.mat}
+                onChange={handleInput}
                 placeholder="Número de matrícula"
               />
             </Subsection>
@@ -2247,19 +1554,10 @@ const CreateDocuments = ({
             title="Terceros y datos adicionales"
             description="Información complementaria para la documentación"
             icon={<UsersIcon />}
-            status={getSectionStatus(
-              "adicionales"
-            )}
-            progress={getSectionProgress(
-              "adicionales"
-            )}
-            isOpen={
-              openSection ===
-              "adicionales"
-            }
-            onToggle={
-              handleToggleSection
-            }
+            status={getSectionStatus("adicionales")}
+            progress={getSectionProgress("adicionales")}
+            isOpen={openSection === "adicionales"}
+            onToggle={handleToggleSection}
           >
             {/* TERCERO */}
 
@@ -2270,36 +1568,24 @@ const CreateDocuments = ({
               <Field
                 label="Nombre y apellido"
                 name="tercero.name"
-                value={
-                  input.tercero.name
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.name}
+                onChange={handleInput}
                 placeholder="Nombre completo"
               />
 
               <Field
                 label="DNI"
                 name="tercero.dni"
-                value={
-                  input.tercero.dni
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.dni}
+                onChange={handleInput}
                 placeholder="Ej.: 30.123.456"
               />
 
               <Field
                 label="Domicilio"
                 name="tercero.adress"
-                value={
-                  input.tercero.adress
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.adress}
+                onChange={handleInput}
                 placeholder="Calle y número"
                 fullWidth
               />
@@ -2307,38 +1593,24 @@ const CreateDocuments = ({
               <Field
                 label="Localidad"
                 name="tercero.localidad"
-                value={
-                  input.tercero
-                    .localidad
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.localidad}
+                onChange={handleInput}
                 placeholder="Ej.: Alta Gracia"
               />
 
               <Field
                 label="Código postal"
                 name="tercero.cp"
-                value={
-                  input.tercero.cp
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.cp}
+                onChange={handleInput}
                 placeholder="Ej.: 5186"
               />
 
               <Field
                 label="Teléfono fijo"
                 name="tercero.phoneNumber"
-                value={
-                  input.tercero
-                    .phoneNumber
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.phoneNumber}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Teléfono fijo"
               />
@@ -2346,13 +1618,8 @@ const CreateDocuments = ({
               <Field
                 label="Número de celular"
                 name="tercero.cellPhone"
-                value={
-                  input.tercero
-                    .cellPhone
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.tercero.cellPhone}
+                onChange={handleInput}
                 type="tel"
                 placeholder="Número de celular"
               />
@@ -2367,12 +1634,8 @@ const CreateDocuments = ({
               <Field
                 label="Domicilio de la mediación"
                 name="adressMediacion"
-                value={
-                  input.adressMediacion
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.adressMediacion}
+                onChange={handleInput}
                 placeholder="Lugar donde se desarrolla la mediación"
                 fullWidth
               />
@@ -2380,24 +1643,16 @@ const CreateDocuments = ({
               <Field
                 label="Abogado patrocinante"
                 name="abogadoPatrocinante"
-                value={
-                  input.abogadoPatrocinante
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.abogadoPatrocinante}
+                onChange={handleInput}
                 placeholder="Nombre del abogado patrocinante"
               />
 
               <Field
                 label="Matrícula del abogado patrocinante"
                 name="abogadoPatrocinanteMat"
-                value={
-                  input.abogadoPatrocinanteMat
-                }
-                onChange={
-                  handleInput
-                }
+                value={input.abogadoPatrocinanteMat}
+                onChange={handleInput}
                 placeholder="Ej.: 1-45678"
               />
             </Subsection>
@@ -2408,23 +1663,11 @@ const CreateDocuments = ({
             ACCIONES
         =============================== */}
 
-        <footer
-          className={styles.actions}
-        >
-          <div
-            className={
-              styles.actionsInformation
-            }
-          >
-            <strong>
-              Generación de documentos
-            </strong>
+        <footer className={styles.actions}>
+          <div className={styles.actionsInformation}>
+            <strong>Generación de documentos</strong>
 
-            <span>
-              Revise los datos
-              obligatorios antes de
-              continuar.
-            </span>
+            <span>Revise los datos obligatorios antes de continuar.</span>
 
             {/*
               <span>
@@ -2436,11 +1679,7 @@ const CreateDocuments = ({
             */}
           </div>
 
-          <div
-            className={
-              styles.actionButtons
-            }
-          >
+          <div className={styles.actionButtons}>
             {/*
               <button
                 type="button"
@@ -2456,18 +1695,11 @@ const CreateDocuments = ({
 
             <button
               type="button"
-              className={
-                styles.secondaryButton
-              }
-              onClick={
-                handleCreateAgreement
-              }
-              disabled={
-                isGenerating
-              }
+              className={styles.secondaryButton}
+              onClick={handleCreateAgreement}
+              disabled={isGenerating}
             >
-              {loadingDocument ===
-              "agreement"
+              {loadingDocument === "agreement"
                 ? "Generando..."
                 : "Generar convenio"}
             </button>
@@ -2476,18 +1708,11 @@ const CreateDocuments = ({
 
             <button
               type="button"
-              className={
-                styles.primaryButton
-              }
-              onClick={
-                handleCreateHearingRecord
-              }
-              disabled={
-                isGenerating
-              }
+              className={styles.primaryButton}
+              onClick={handleCreateHearingRecord}
+              disabled={isGenerating}
             >
-              {loadingDocument ===
-              "hearing"
+              {loadingDocument === "hearing"
                 ? "Generando..."
                 : "Generar acta de audiencia"}
             </button>
@@ -2496,18 +1721,11 @@ const CreateDocuments = ({
 
             <button
               type="button"
-              className={
-                styles.primaryButton
-              }
-              onClick={
-                handleCreateClosingRecord
-              }
-              disabled={
-                isGenerating
-              }
+              className={styles.primaryButton}
+              onClick={handleCreateClosingRecord}
+              disabled={isGenerating}
             >
-              {loadingDocument ===
-              "closing"
+              {loadingDocument === "closing"
                 ? "Generando..."
                 : "Generar acta de cierre"}
             </button>
