@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./CreateDocuments.module.css";
+import api from "../../services/api";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -706,11 +707,8 @@ const CreateDocuments = ({ embedded = true }) => {
 
       const accessToken = localStorage.getItem("accessToken");
 
-      const response = await axios.post(`${API_URL}${endpoint}`, input, {
+      const response = await api.post(endpoint, input, {
         responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
       });
 
       const blob = new Blob([response.data], {
