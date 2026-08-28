@@ -1,9 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import styles from "./CreateDocuments.module.css";
 import api from "../../services/api";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const initialState = {
   expediente: "",
@@ -78,15 +75,6 @@ const initialState = {
 
   abogadoPatrocinante: "",
   abogadoPatrocinanteMat: "",
-
-  /*
-    Campos previstos para una futura persistencia:
-
-    documentId: null,
-    documentStatus: "draft",
-    createdAt: null,
-    updatedAt: null,
-  */
 };
 
 /* =====================================================
@@ -96,7 +84,6 @@ const initialState = {
 const sectionsConfiguration = {
   expediente: {
     required: ["expediente", "number", "date"],
-
     total: ["expediente", "number", "date", "start", "end", "nextDate"],
   },
 
@@ -106,16 +93,12 @@ const sectionsConfiguration = {
     total: [
       "requirente.name",
       "requirente.dni",
-
       "requirente.adress",
       "requirente.localidad",
       "requirente.cp",
-
       "requirente.email",
-
       "requirente.phoneFixed",
       "requirente.phoneNumber",
-
       "requirente.letrado.name",
       "requirente.letrado.mat",
       "requirente.letrado.adress",
@@ -123,7 +106,6 @@ const sectionsConfiguration = {
       "requirente.letrado.cp",
       "requirente.letrado.email",
       "requirente.letrado.phoneNumber",
-
       "requirente.mediador.name",
       "requirente.mediador.mat",
     ],
@@ -135,22 +117,17 @@ const sectionsConfiguration = {
     total: [
       "requerido.name",
       "requerido.dni",
-
       "requerido.adress",
       "requerido.localidad",
       "requerido.cp",
-
       "requerido.email",
-
       "requerido.phoneFixed",
       "requerido.phoneNumber",
-
       "requerido.letrado.name",
       "requerido.letrado.mat",
       "requerido.letrado.adress",
       "requerido.letrado.email",
       "requerido.letrado.phoneNumber",
-
       "requerido.mediador.name",
       "requerido.mediador.mat",
     ],
@@ -167,9 +144,7 @@ const sectionsConfiguration = {
       "tercero.cp",
       "tercero.phoneNumber",
       "tercero.cellPhone",
-
       "adressMediacion",
-
       "abogadoPatrocinante",
       "abogadoPatrocinanteMat",
     ],
@@ -236,7 +211,6 @@ function getNestedValue(object, path) {
 
 function setNestedValue(object, path, value) {
   const keys = path.split(".");
-
   const result = structuredClone(object);
 
   let currentLevel = result;
@@ -384,7 +358,6 @@ const Field = ({
       {required && (
         <>
           <span className={styles.requiredMark}>*</span>
-
           <span className={styles.srOnly}> obligatorio</span>
         </>
       )}
@@ -499,23 +472,15 @@ const AccordionSection = ({
 
 const CreateDocuments = ({ embedded = true }) => {
   const [input, setInput] = useState(initialState);
-
   const [openSection, setOpenSection] = useState("expediente");
-
   const [formError, setFormError] = useState("");
-
   const [loadingDocument, setLoadingDocument] = useState("");
 
-  /*
-    Estados preparados para futura implementación:
-
-    const [documentId, setDocumentId] = useState(null);
-    const [documentStatus, setDocumentStatus] = useState("draft");
-    const [saveStatus, setSaveStatus] = useState("idle");
-    const [lastSavedAt, setLastSavedAt] = useState(null);
-    const [isDraftSaving, setIsDraftSaving] = useState(false);
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  */
+  const [mediationId, setMediationId] = useState(null);
+  const [saveStatus, setSaveStatus] = useState("idle");
+  const [lastSavedAt, setLastSavedAt] = useState(null);
+  const [isDraftSaving, setIsDraftSaving] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   /* =====================================================
      INPUT
@@ -530,12 +495,8 @@ const CreateDocuments = ({ embedded = true }) => {
       setFormError("");
     }
 
-    /*
-      Futuro autoguardado:
-
-      setHasUnsavedChanges(true);
-      setSaveStatus("pending");
-    */
+    setHasUnsavedChanges(true);
+    setSaveStatus("pending");
   };
 
   /* =====================================================
@@ -546,14 +507,6 @@ const CreateDocuments = ({ embedded = true }) => {
     setOpenSection((currentSection) =>
       currentSection === sectionId ? "" : sectionId,
     );
-
-    /*
-      Futuro:
-
-      if (hasUnsavedChanges) {
-        handleSaveDraft();
-      }
-    */
   };
 
   /* =====================================================
@@ -702,10 +655,7 @@ const CreateDocuments = ({ embedded = true }) => {
 
     try {
       setLoadingDocument(documentType);
-
       setFormError("");
-
-      const accessToken = localStorage.getItem("accessToken");
 
       const response = await api.post(endpoint, input, {
         responseType: "blob",
@@ -720,23 +670,14 @@ const CreateDocuments = ({ embedded = true }) => {
       const link = document.createElement("a");
 
       link.href = url;
-
       link.download = fileName;
 
       document.body.appendChild(link);
 
       link.click();
-
       link.remove();
 
       window.URL.revokeObjectURL(url);
-
-      /*
-        Futuro:
-
-        setDocumentStatus("completed");
-        setSaveStatus("saved");
-      */
     } catch (error) {
       console.error("Error descargando el documento:", error);
 
@@ -780,182 +721,89 @@ const CreateDocuments = ({ embedded = true }) => {
   const handleCreateClosingRecord = () => {
     downloadDocument({
       endpoint: "/fill/actaCierre",
-
       fileName: "acta-cierre-mediacion.docx",
-
       documentType: "closing",
     });
   };
 
-  /*
-    =====================================================
-    FUNCIONES FUTURAS
-    =====================================================
+  /* =====================================================
+     GUARDAR MEDIACIÓN
+  ===================================================== */
 
-    const handleCreateDraft = async () => {
+  const handleSaveDraft = async () => {
+    if (!input.expediente.trim()) {
+      setFormError(
+        "Debe completar la carátula del expediente antes de guardar.",
+      );
 
-      try {
+      setOpenSection("expediente");
 
-        setIsDraftSaving(true);
+      window.requestAnimationFrame(() => {
+        document.getElementById("expediente")?.focus();
+      });
 
-        setSaveStatus("saving");
+      return;
+    }
 
-        const response =
-          await axios.post(
-            `${API_URL}/documents`,
-            {
-              ...input,
-              status: "draft",
-            }
-          );
+    if (!input.number.trim()) {
+      setFormError("Debe completar el número de expediente antes de guardar.");
 
-        setDocumentId(
-          response.data.id
-        );
+      setOpenSection("expediente");
 
-        setDocumentStatus(
-          "draft"
-        );
+      window.requestAnimationFrame(() => {
+        document.getElementById("number")?.focus();
+      });
 
-        setSaveStatus(
-          "saved"
-        );
+      return;
+    }
 
-        setLastSavedAt(
-          new Date()
-        );
+    if (!input.date) {
+      setFormError("Debe seleccionar la fecha de audiencia antes de guardar.");
 
-        setHasUnsavedChanges(
-          false
-        );
+      setOpenSection("expediente");
 
-      } catch (error) {
+      window.requestAnimationFrame(() => {
+        document.getElementById("date")?.focus();
+      });
 
-        console.error(
-          "Error creando borrador:",
-          error
-        );
+      return;
+    }
 
-        setSaveStatus(
-          "error"
-        );
+    try {
+      setIsDraftSaving(true);
+      setSaveStatus("saving");
+      setFormError("");
 
-      } finally {
+      if (!mediationId) {
+        const response = await api.post("/mediation", {
+          ...input,
+          status: "draft",
+        });
 
-        setIsDraftSaving(
-          false
-        );
-      }
-    };
-
-
-    const handleSaveDraft = async () => {
-
-      if (!documentId) {
-
-        await handleCreateDraft();
-
-        return;
+        setMediationId(response.data.mediation.id);
+      } else {
+        await api.patch(`/mediation/${mediationId}`, {
+          ...input,
+          status: "draft",
+        });
       }
 
-      try {
+      setSaveStatus("saved");
+      setLastSavedAt(new Date());
+      setHasUnsavedChanges(false);
+    } catch (error) {
+      console.error("Error guardando la mediación:", error);
 
-        setIsDraftSaving(true);
+      setSaveStatus("error");
 
-        setSaveStatus("saving");
-
-        await axios.patch(
-          `${API_URL}/documents/${documentId}`,
-          {
-            ...input,
-            status:
-              documentStatus,
-          }
-        );
-
-        setSaveStatus(
-          "saved"
-        );
-
-        setLastSavedAt(
-          new Date()
-        );
-
-        setHasUnsavedChanges(
-          false
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Error guardando borrador:",
-          error
-        );
-
-        setSaveStatus(
-          "error"
-        );
-
-      } finally {
-
-        setIsDraftSaving(
-          false
-        );
-      }
-    };
-
-
-    const handleRecoverDraft =
-      async (draftId) => {
-
-        try {
-
-          const response =
-            await axios.get(
-              `${API_URL}/documents/${draftId}`
-            );
-
-          setInput(
-            response.data.document
-          );
-
-          setDocumentId(
-            response.data.document.id
-          );
-
-          setDocumentStatus(
-            response.data.document.status
-          );
-
-        } catch (error) {
-
-          console.error(
-            "Error recuperando borrador:",
-            error
-          );
-        }
-      };
-
-
-    const handleArchiveDocument =
-      async () => {
-
-        if (!documentId)
-          return;
-
-        await axios.patch(
-          `${API_URL}/documents/${documentId}`,
-          {
-            status:
-              "archived",
-          }
-        );
-
-        setDocumentStatus(
-          "archived"
-        );
-      };
-  */
+      setFormError(
+        error.response?.data?.error ||
+          "No fue posible guardar la mediación. Verificá la conexión e intentá nuevamente.",
+      );
+    } finally {
+      setIsDraftSaving(false);
+    }
+  };
 
   const overallProgress = getOverallProgress();
 
@@ -981,18 +829,27 @@ const CreateDocuments = ({ embedded = true }) => {
           </div>
 
           <div className={styles.headerActions}>
-            {/*
-              <button
-                type="button"
-                className={styles.draftButton}
-                onClick={handleSaveDraft}
-                disabled={isDraftSaving}
-              >
+            <button
+              type="button"
+              className={`${styles.draftButton} ${
+                isDraftSaving ? styles.draftButtonSaving : ""
+              }`}
+              onClick={handleSaveDraft}
+              disabled={isDraftSaving || !hasUnsavedChanges}
+              aria-busy={isDraftSaving}
+            >
+              <span className={styles.draftButtonContent}>
                 {isDraftSaving
                   ? "Guardando..."
-                  : "Guardar borrador"}
-              </button>
-            */}
+                  : mediationId
+                    ? "Guardar cambios"
+                    : "Guardar borrador"}
+              </span>
+
+              {isDraftSaving && (
+                <span className={styles.draftButtonLoader} aria-hidden="true" />
+              )}
+            </button>
 
             <div className={styles.documentMark}>
               <DocumentIcon />
@@ -1038,12 +895,6 @@ const CreateDocuments = ({ embedded = true }) => {
               }}
             />
           </div>
-
-          {/*
-            <div className={styles.saveStatus}>
-              ...
-            </div>
-          */}
         </section>
 
         {/* ===============================
@@ -1207,8 +1058,6 @@ const CreateDocuments = ({ embedded = true }) => {
             isOpen={openSection === "requirente"}
             onToggle={handleToggleSection}
           >
-            {/* DATOS PERSONALES */}
-
             <Subsection
               title="Datos personales"
               description="Información de la persona requirente."
@@ -1285,8 +1134,6 @@ const CreateDocuments = ({ embedded = true }) => {
               />
             </Subsection>
 
-            {/* LETRADO REQUIRENTE */}
-
             <Subsection
               title="Letrado de la parte requirente"
               description="Complete estos datos cuando corresponda."
@@ -1351,8 +1198,6 @@ const CreateDocuments = ({ embedded = true }) => {
               />
             </Subsection>
 
-            {/* MEDIADOR REQUIRENTE */}
-
             <Subsection
               title="Mediador de la parte requirente"
               description="Datos profesionales del mediador."
@@ -1390,8 +1235,6 @@ const CreateDocuments = ({ embedded = true }) => {
             isOpen={openSection === "requerido"}
             onToggle={handleToggleSection}
           >
-            {/* DATOS PERSONALES */}
-
             <Subsection
               title="Datos personales"
               description="Información de la persona requerida."
@@ -1468,8 +1311,6 @@ const CreateDocuments = ({ embedded = true }) => {
               />
             </Subsection>
 
-            {/* LETRADO REQUERIDO */}
-
             <Subsection
               title="Letrado de la parte requerida"
               description="Complete estos datos cuando corresponda."
@@ -1518,8 +1359,6 @@ const CreateDocuments = ({ embedded = true }) => {
               />
             </Subsection>
 
-            {/* MEDIADOR REQUERIDO */}
-
             <Subsection
               title="Mediador de la parte requerida"
               description="Datos profesionales del mediador."
@@ -1557,8 +1396,6 @@ const CreateDocuments = ({ embedded = true }) => {
             isOpen={openSection === "adicionales"}
             onToggle={handleToggleSection}
           >
-            {/* TERCERO */}
-
             <Subsection
               title="Tercero interviniente"
               description="Complete esta sección solamente si participa un tercero."
@@ -1623,8 +1460,6 @@ const CreateDocuments = ({ embedded = true }) => {
               />
             </Subsection>
 
-            {/* INFORMACIÓN COMPLEMENTARIA */}
-
             <Subsection
               title="Información complementaria"
               description="Datos adicionales de la mediación."
@@ -1667,30 +1502,12 @@ const CreateDocuments = ({ embedded = true }) => {
 
             <span>Revise los datos obligatorios antes de continuar.</span>
 
-            {/*
-              <span>
-                Último guardado:
-                {lastSavedAt
-                  ? lastSavedAt.toLocaleTimeString()
-                  : "Sin guardar"}
-              </span>
-            */}
+            {lastSavedAt && (
+              <span>Último guardado: {lastSavedAt.toLocaleTimeString()}</span>
+            )}
           </div>
 
           <div className={styles.actionButtons}>
-            {/*
-              <button
-                type="button"
-                className={styles.draftButton}
-                onClick={handleSaveDraft}
-                disabled={isDraftSaving}
-              >
-                Guardar borrador
-              </button>
-            */}
-
-            {/* CONVENIO */}
-
             <button
               type="button"
               className={styles.secondaryButton}
@@ -1702,8 +1519,6 @@ const CreateDocuments = ({ embedded = true }) => {
                 : "Generar convenio"}
             </button>
 
-            {/* ACTA AUDIENCIA */}
-
             <button
               type="button"
               className={styles.primaryButton}
@@ -1714,8 +1529,6 @@ const CreateDocuments = ({ embedded = true }) => {
                 ? "Generando..."
                 : "Generar acta de audiencia"}
             </button>
-
-            {/* ACTA CIERRE */}
 
             <button
               type="button"
