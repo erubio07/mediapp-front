@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../../Components/SideBar/SideBar";
 import { getUserById } from "../../Redux/actions";
 import CreateDocuments from "../../Components/CreateDocuments/CreateDocuments";
+import MisMediaciones from "../../Components/MisMediaciones/MisMediaciones";
 // Importá EditUser desde la ubicación real de tu proyecto.
 // import EditUser from "../../Components/EditUser/EditUser";
 import styles from "./Dashboard.module.css";
@@ -27,14 +28,21 @@ const Dashboard = () => {
 
   const userName = user?.name || storedName || "Usuario";
 
-  const canCreateContracts =
-    user?.RoleId === 1 || user?.RoleId === 2;
+  const canCreateContracts = user?.RoleId === 1 || user?.RoleId === 2;
 
   const renderContent = () => {
     if (option === "contracts" && canCreateContracts) {
       return (
         <div className={styles.componentContainer}>
           <CreateDocuments />
+        </div>
+      );
+    }
+
+    if (option === "mediations" && canCreateContracts) {
+      return (
+        <div className={styles.componentContainer}>
+          <MisMediaciones />
         </div>
       );
     }
@@ -57,8 +65,8 @@ const Dashboard = () => {
             <h2>Editar usuario</h2>
 
             <p>
-              En este sector se mostrará el formulario para modificar
-              los datos personales y de acceso del usuario.
+              En este sector se mostrará el formulario para modificar los datos
+              personales y de acceso del usuario.
             </p>
           </div>
         </div>
@@ -69,15 +77,13 @@ const Dashboard = () => {
       return (
         <div className={styles.componentContainer}>
           <div className={styles.placeholderCard}>
-            <span className={styles.placeholderEyebrow}>
-              Administración
-            </span>
+            <span className={styles.placeholderEyebrow}>Administración</span>
 
             <h2>Gestión de usuarios</h2>
 
             <p>
-              Desde aquí el administrador podrá consultar y gestionar
-              los usuarios registrados en MediApp.
+              Desde aquí el administrador podrá consultar y gestionar los
+              usuarios registrados en MediApp.
             </p>
           </div>
         </div>
@@ -91,24 +97,18 @@ const Dashboard = () => {
 
           <h1 className={styles.welcomeTitle}>
             Bienvenido al Panel de Usuario, {userName}
-            <span
-              className={styles.welcomeEmoji}
-              aria-hidden="true"
-            >
+            <span className={styles.welcomeEmoji} aria-hidden="true">
               👋
             </span>
           </h1>
 
           <p className={styles.welcomeDescription}>
-            Seleccioná una opción del menú lateral para comenzar a
-            gestionar tus mediaciones y documentos.
+            Seleccioná una opción del menú lateral para comenzar a gestionar tus
+            mediaciones y documentos.
           </p>
         </div>
 
-        <div
-          className={styles.welcomeDecoration}
-          aria-hidden="true"
-        >
+        <div className={styles.welcomeDecoration} aria-hidden="true">
           <span />
           <span />
           <span />
@@ -135,9 +135,7 @@ const Dashboard = () => {
       <SideBar handleOption={handleOption} />
 
       <main className={styles.content}>
-        <div className={styles.contentInner}>
-          {renderContent()}
-        </div>
+        <div className={styles.contentInner}>{renderContent()}</div>
       </main>
     </div>
   );
