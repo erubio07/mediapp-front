@@ -6,6 +6,7 @@ import Footer from "./Components/Footer/Footer";
 import Subscription from "./Components/Subscription/Subscription";
 import { AuthProvider } from "./Components/AuthProvider/AuthProvider";
 import { ProtectedRoutes } from "./Components/ProtectedRoutes/ProtectedRoutes";
+import MisMediaciones from "./components/MisMediaciones/MisMediaciones";
 
 function App() {
   return (
@@ -14,12 +15,13 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/subs" element={<Subscription/>} />
+          <Route exact path="/subs" element={<Subscription />} />
           <Route
             exact
             path="/dashboard"
             element={<ProtectedRoutes element={<Dashboard />} />}
           />
+          <Route path="/mis-mediaciones" element={<MisMediaciones />} />
         </Routes>
         {/* <Footer /> */}
       </AuthProvider>

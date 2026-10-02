@@ -9,6 +9,7 @@ import {
   TfiPencilAlt,
   TfiWrite,
   TfiIdBadge,
+  TfiFolder,
 } from "react-icons/tfi";
 import styles from "./SideBar.module.css";
 
@@ -69,9 +70,7 @@ const SideBar = ({ handleOption }) => {
       </div>
 
       <div className={styles.profileContainer}>
-        <div className={styles.profileImage}>
-          {initials || <TfiUser />}
-        </div>
+        <div className={styles.profileImage}>{initials || <TfiUser />}</div>
 
         <div className={styles.profileInformation}>
           <strong>{fullName}</strong>
@@ -91,9 +90,7 @@ const SideBar = ({ handleOption }) => {
           <Link
             onClick={() => selectOption("dashboard")}
             className={`${styles.link} ${
-              activeOption === "dashboard"
-                ? styles.activeLink
-                : ""
+              activeOption === "dashboard" ? styles.activeLink : ""
             }`}
           >
             <TfiPencilAlt />
@@ -105,9 +102,7 @@ const SideBar = ({ handleOption }) => {
             <Link
               onClick={() => selectOption("contracts")}
               className={`${styles.link} ${
-                activeOption === "contracts"
-                  ? styles.activeLink
-                  : ""
+                activeOption === "contracts" ? styles.activeLink : ""
               }`}
             >
               <TfiWrite />
@@ -115,21 +110,28 @@ const SideBar = ({ handleOption }) => {
               <span>Crear contratos</span>
             </Link>
           )}
+          {(user?.RoleId === 1 || user?.RoleId === 2) && (
+            <Link
+              onClick={() => selectOption("mediations")}
+              className={`${styles.link} ${
+                activeOption === "mediations" ? styles.activeLink : ""
+              }`}
+            >
+              <TfiFolder />
+              <span>Mis Mediaciones</span>
+            </Link>
+          )}
         </div>
 
         <div className={styles.navigationDivider}></div>
 
         <div className={styles.navigationSection}>
-          <span className={styles.sectionTitle}>
-            Administración
-          </span>
+          <span className={styles.sectionTitle}>Administración</span>
 
           <Link
             onClick={() => selectOption("edituser")}
             className={`${styles.link} ${
-              activeOption === "edituser"
-                ? styles.activeLink
-                : ""
+              activeOption === "edituser" ? styles.activeLink : ""
             }`}
           >
             <TfiIdBadge />
@@ -141,9 +143,7 @@ const SideBar = ({ handleOption }) => {
             <Link
               onClick={() => selectOption("users")}
               className={`${styles.link} ${
-                activeOption === "users"
-                  ? styles.activeLink
-                  : ""
+                activeOption === "users" ? styles.activeLink : ""
               }`}
             >
               <TfiUser />
@@ -167,10 +167,7 @@ const SideBar = ({ handleOption }) => {
             </div>
           </div>
 
-          <button
-            type="button"
-            className={styles.planButton}
-          >
+          <button type="button" className={styles.planButton}>
             Ver mi plan
             <span aria-hidden="true">›</span>
           </button>
