@@ -6,7 +6,7 @@ import Footer from "./Components/Footer/Footer";
 import Subscription from "./Components/Subscription/Subscription";
 import { AuthProvider } from "./Components/AuthProvider/AuthProvider";
 import { ProtectedRoutes } from "./Components/ProtectedRoutes/ProtectedRoutes";
-import MisMediaciones from "./components/MisMediaciones/MisMediaciones";
+import MisMediaciones from "./Components/MisMediaciones/MisMediaciones";
 
 function App() {
   return (
